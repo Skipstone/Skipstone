@@ -1,0 +1,55 @@
+{
+	"uuid": "b3c70a75-e501-455a-9f72-3b3d06e75f4c",
+	"shortName": "Skipstone",
+	"longName": "Skipstone",
+	"companyName": "MakeAwesomeHappen",
+	"versionCode": 1,
+	"versionLabel": "1.0.0",
+	"capabilities": [ "configurable" ],
+	"watchapp": {
+		"watchface": false
+	},
+	"appKeys": {
+		"player": 0,
+		"request": 1,
+		"index": 2,
+		"title": 3,
+		"status": 4,
+		"volume": 5,
+		"seek": 6
+	},
+	"resources": {
+		"media": [
+			{
+				"type": "png",
+				"name": "ICON_VOLUME_UP",
+				"file": "images/volume_up.png"
+			},
+			{
+				"type": "png",
+				"name": "ICON_VOLUME_DOWN",
+				"file": "images/volume_down.png"
+			},
+			{
+				"type": "png",
+				"name": "ICON_PLAY",
+				"file": "images/play.png"
+			},
+			{
+				"type": "png",
+				"name": "ICON_PAUSE",
+				"file": "images/pause.png"
+			},
+			{
+				"type": "png",
+				"name": "ICON_FORWARD",
+				"file": "images/forward.png"
+			},
+			{
+				"type": "png",
+				"name": "ICON_REWIND",
+				"file": "images/rewind.png"
+			}
+		]
+	}
+}
