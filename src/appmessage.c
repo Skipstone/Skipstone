@@ -1,6 +1,8 @@
 #include <pebble.h>
 #include "appmessage.h"
 #include "common.h"
+#include "libs/pebble-assist.h"
+#include "windows/playerlist.h"
 #include "windows/plex.h"
 #include "windows/vlc.h"
 #include "windows/xbmc.h"
@@ -11,7 +13,7 @@ static void out_sent_handler(DictionaryIterator *sent, void *context);
 static void out_failed_handler(DictionaryIterator *failed, AppMessageResult reason, void *context);
 
 void appmessage_init(void) {
-	app_message_open(128 /* inbound_size */, 32 /* outbound_size */);
+	app_message_open(128 /* inbound_size */, 64 /* outbound_size */);
 	app_message_register_inbox_received(in_received_handler);
 	app_message_register_inbox_dropped(in_dropped_handler);
 	app_message_register_outbox_sent(out_sent_handler);
@@ -20,22 +22,26 @@ void appmessage_init(void) {
 
 static void in_received_handler(DictionaryIterator *iter, void *context) {
 	Tuple *player_tuple = dict_find(iter, KEY_PLAYER);
+	Tuple *request_tuple = dict_find(iter, KEY_REQUEST);
+
+	if (request_tuple && player_tuple) {
+		playerlist_in_received_handler(iter);
+		return;
+	}
 
 	if (player_tuple) {
 		switch (player_tuple->value->int16) {
 			case MediaPlayerPLEX:
-//				plex_in_received_handler(iter);
+				plex_in_received_handler(iter);
 				break;
 			case MediaPlayerVLC:
 				vlc_in_received_handler(iter);
 				break;
 			case MediaPlayerXBMC:
-//				xbmc_in_received_handler(iter);
+				xbmc_in_received_handler(iter);
 				break;
 		}
 	}
-
-	// list
 }
 
 static void in_dropped_handler(AppMessageResult reason, void *context) {

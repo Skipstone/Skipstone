@@ -12,6 +12,7 @@ static Player players[MAX_PLAYERS];
 
 static int num_players;
 
+const char* player_to_str(MediaPlayer player);
 static void refresh_list();
 static void request_data();
 static uint16_t menu_get_num_sections_callback(struct MenuLayer *menu_layer, void *callback_context);
@@ -44,14 +45,12 @@ void playerlist_init(void) {
 	menu_layer_add_to_window(menu_layer, window);
 
 	window_stack_push(window, true);
-
-	refresh_list();
 }
 
 void playerlist_destroy(void) {
-//	plex_destroy();
+	plex_destroy();
 	vlc_destroy();
-//	xbmc_destroy();
+	xbmc_destroy();
 	layer_remove_from_parent(menu_layer_get_layer(menu_layer));
 	menu_layer_destroy_safe(menu_layer);
 	window_destroy_safe(window);
@@ -78,14 +77,25 @@ void playerlist_in_received_handler(DictionaryIterator *iter) {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - //
 
+const char* player_to_str(MediaPlayer player) {
+	switch (player) {
+		case MediaPlayerPLEX:
+			return "Plex";
+		case MediaPlayerVLC:
+			return "VLC";
+		case MediaPlayerXBMC:
+			return "XBMC";
+		default:
+			return "";
+	}
+}
+
 static void refresh_list() {
 	memset(players, 0x0, sizeof(players));
 	num_players = 0;
 	menu_layer_set_selected_index(menu_layer, (MenuIndex) { .row = 0, .section = 0 }, MenuRowAlignBottom, false);
 	menu_layer_reload_data_and_mark_dirty(menu_layer);
-//	request_data();
-	// add test data until JS is updated
-	players[num_players++] = (Player) { .index = 0, .title = "MacBook Pro", .subtitle = "VLC - 10.0.1.4", .player = MediaPlayerVLC };
+	request_data();
 	menu_layer_reload_data_and_mark_dirty(menu_layer);
 }
 
@@ -118,7 +128,7 @@ static int16_t menu_get_header_height_callback(struct MenuLayer *menu_layer, uin
 }
 
 static int16_t menu_get_cell_height_callback(struct MenuLayer *menu_layer, MenuIndex *cell_index, void *callback_context) {
-	return MENU_CELL_BASIC_CELL_HEIGHT;
+	return 48;
 }
 
 static void menu_draw_header_callback(GContext *ctx, const Layer *cell_layer, uint16_t section_index, void *callback_context) {
@@ -129,7 +139,10 @@ static void menu_draw_row_callback(GContext *ctx, const Layer *cell_layer, MenuI
 	if (num_players == 0) {
 		menu_cell_basic_draw(ctx, cell_layer, "Loading...", NULL, NULL);
 	} else {
-		menu_cell_basic_draw(ctx, cell_layer, players[cell_index->row].title, players[cell_index->row].subtitle, NULL);
+		graphics_context_set_text_color(ctx, GColorBlack);
+		graphics_draw_text(ctx, players[cell_index->row].title, fonts_get_system_font(FONT_KEY_GOTHIC_24_BOLD), (GRect) { .origin = { 4, 0 }, .size = { PEBBLE_WIDTH - 8, 24 } }, GTextOverflowModeTrailingEllipsis, GTextAlignmentLeft, NULL);
+		graphics_draw_text(ctx, players[cell_index->row].subtitle, fonts_get_system_font(FONT_KEY_GOTHIC_18), (GRect) { .origin = { 4, 24 }, .size = { 100, 20 } }, GTextOverflowModeTrailingEllipsis, GTextAlignmentLeft, NULL);
+		graphics_draw_text(ctx, player_to_str(players[cell_index->row].player), fonts_get_system_font(FONT_KEY_GOTHIC_18), (GRect) { .origin = { 4, 24 }, .size = { PEBBLE_WIDTH - 8, 20 } }, GTextOverflowModeTrailingEllipsis, GTextAlignmentRight, NULL);
 	}
 }
 
@@ -140,13 +153,13 @@ static void menu_select_callback(struct MenuLayer *menu_layer, MenuIndex *cell_i
 
 	switch (players[cell_index->row].player) {
 		case MediaPlayerPLEX:
-//			plex_init(cell_index->row);
+			plex_init(players[cell_index->row]);
 			break;
 		case MediaPlayerVLC:
 			vlc_init(players[cell_index->row]);
 			break;
 		case MediaPlayerXBMC:
-//			xbmc_init(cell_index->row);
+			xbmc_init(players[cell_index->row]);
 			break;
 	}
 }

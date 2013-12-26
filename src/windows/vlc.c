@@ -180,7 +180,7 @@ static void window_load(Window *window) {
 	text_layer_set_font(status_text_layer, fonts_get_system_font(FONT_KEY_GOTHIC_18));
 
 	status_layer = text_layer_create((GRect) { .origin = { 8, 54 + 15 }, .size = bounds.size });
-	text_layer_set_text(status_layer, "Unknown");
+	text_layer_set_text(status_layer, "Loading...");
 	text_layer_set_text_color(status_layer, GColorBlack);
 	text_layer_set_background_color(status_layer, GColorClear);
 	text_layer_set_font(status_layer, fonts_get_system_font(FONT_KEY_GOTHIC_28_BOLD));
