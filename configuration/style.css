@@ -1,0 +1,51 @@
+.ui-loading, .ui-loader {
+	display: none;
+}
+
+.btn-extra-padding {
+	padding-left: 22px;
+	padding-right: 22px;
+}
+
+.update-alert {
+	display: none;
+}
+
+.add-player {
+	text-align: center;
+}
+
+.panel-template {
+	display: none;
+}
+
+.panel-container {
+	margin-bottom: 20px;
+}
+
+.panel-heading {
+	font-weight: bold;
+}
+
+.panel-heading .accordion-toggle:after {
+	font-family: 'FontAwesome';
+	content: '\f078';
+	float: right;
+	color: #CCC;
+}
+
+.panel-heading .accordion-toggle.collapsed:after {
+	content: '\f054';
+}
+
+.handle {
+	padding: 0px 10px 0px 0px;
+	color: #CCC;
+}
+
+.btn-delete {
+	display: none;
+	padding: 6px 10px 6px 10px;
+	margin: -6px 12px 0px 0px;
+	float: right;
+}

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang='en'>
+	<head>
+		<meta charset='utf-8'>
+		<meta name='viewport' content='width=device-width, initial-scale=1.0, user-scalable=0'>
+		<meta name='description' content='Skipstone Configuration'>
+		<title>Skipstone Configuration</title>
+		<link href='//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css' rel='stylesheet'>
+		<link href='//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css' rel='stylesheet'>
+		<link href='style.css' rel='stylesheet'>
+	</head>
+
+	<body>
+		<nav class='navbar navbar-inverse' role='navigation'>
+			<div class='navbar-header'>
+				<a class='navbar-brand' href='#'>Skipstone Configuration</a>
+			</div>
+		</nav>
+
+		<div class='container'>
+
+			<div class='alert alert-info alert-dismissable update-alert'>
+				<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
+				<strong>Warning!</strong> You are running an older version of Skipstone. Please update to the latest version.
+			</div>
+
+			<h4>Add Media Player</h4>
+			<div class='add-player well well-sm'>
+				<button type='button' class='btn btn-danger btn-extra-padding btn-add-plex'>Plex</button>
+				<button type='button' class='btn btn-warning btn-extra-padding btn-add-vlc'>VLC</button>
+				<button type='button' class='btn btn-success btn-extra-padding btn-add-xbmc'>XBMC</button>
+			</div>
+
+			<h4>Media Players</h4>
+			<div class='panel-container panel-group' id='accordion'>
+				<div class='panel panel-default panel-danger panel-template panel-template-0'>
+					<div class='panel-heading'>
+						<i class='handle fa fa-bars'></i>
+						<span class='panel-title'></span>
+						<a class='accordion-toggle' data-toggle='collapse' data-parent='#accordion' href='#panel_plex_template'></a>
+						<span class='btn btn-danger btn-delete'>Delete</span>
+					</div>
+					<div id='panel_plex_template' class='panel-collapse collapse in'>
+						<div class='panel-body'>
+							<input type='hidden' id='player' value='0' />
+							<div class='form-group'>
+								<label for='title'>Title</label>
+								<input type='text' class='form-control' id='title' maxlength='20' />
+							</div>
+							<div class='form-group'>
+								<label for='subtitle'>Subtitle</label>
+								<input type='text' class='form-control' id='subtitle' maxlength='15' />
+							</div>
+							<div class='form-group'>
+								<label for='server'>Server</label>
+								<input type='text' class='form-control' id='server' />
+							</div>
+						</div>
+					</div>
+				</div> <!-- /panel-template-plex -->
+				<div class='panel panel-default panel-warning panel-template panel-template-1'>
+					<div class='panel-heading'>
+						<i class='handle fa fa-bars'></i>
+						<span class='panel-title'></span>
+						<a class='accordion-toggle' data-toggle='collapse' data-parent='#accordion' href='#panel_vlc_template'></a>
+						<span class='btn btn-danger btn-delete'>Delete</span>
+					</div>
+					<div id='panel_vlc_template' class='panel-collapse collapse in'>
+						<div class='panel-body'>
+							<input type='hidden' id='player' value='1' />
+							<div class='form-group'>
+								<label for='title'>Title</label>
+								<input type='text' class='form-control' id='title' maxlength='20' />
+							</div>
+							<div class='form-group'>
+								<label for='subtitle'>Subtitle</label>
+								<input type='text' class='form-control' id='subtitle' maxlength='15' />
+							</div>
+							<div class='form-group'>
+								<label for='server'>Server</label>
+								<input type='text' class='form-control' id='server' placeholder='10.0.1.4:8080' />
+							</div>
+							<div class='form-group'>
+								<label for='password'>Password</label>
+								<input type='text' class='form-control' id='password' />
+							</div>
+						</div>
+					</div>
+				</div> <!-- /panel-template-vlc -->
+				<div class='panel panel-default panel-success panel-template panel-template-2'>
+					<div class='panel-heading'>
+						<i class='handle fa fa-bars'></i>
+						<span class='panel-title'></span>
+						<a class='accordion-toggle' data-toggle='collapse' data-parent='#accordion' href='#panel_xbmc_template'></a>
+						<span class='btn btn-danger btn-delete'>Delete</span>
+					</div>
+					<div id='panel_xbmc_template' class='panel-collapse collapse in'>
+						<div class='panel-body'>
+							<input type='hidden' id='player' value='2' />
+							<div class='form-group'>
+								<label for='title'>Title</label>
+								<input type='text' class='form-control' id='title' maxlength='20' />
+							</div>
+							<div class='form-group'>
+								<label for='subtitle'>Subtitle</label>
+								<input type='text' class='form-control' id='subtitle' maxlength='15' />
+							</div>
+							<div class='form-group'>
+								<label for='server'>Server</label>
+								<input type='text' class='form-control' id='server' />
+							</div>
+							<div class='form-group'>
+								<label for='username'>Username</label>
+								<input type='text' class='form-control' id='username' />
+							</div>
+							<div class='form-group'>
+								<label for='password'>Password</label>
+								<input type='text' class='form-control' id='password' />
+							</div>
+						</div>
+					</div>
+				</div> <!-- /panel-template-xbmc -->
+			</div> <!-- /panel-container -->
+
+			<button type='submit' class='btn btn-primary btn-block btn-lg btn-save'>Save</button>
+
+			<hr>
+			<footer class='footer'>
+				<p class='pull-right'><a href='#'>Back to top</a></p>
+				<p>&copy; 2013 Skipstone</p>
+			</footer>
+
+		</div> <!-- /container -->
+
+		<script src='//code.jquery.com/jquery-1.10.2.min.js'></script>
+		<script src='//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js'></script>
+		<script src='//code.jquery.com/ui/1.10.3/jquery-ui.min.js'></script>
+		<script src='//code.jquery.com/mobile/1.4.0/jquery.mobile-1.4.0.min.js'></script>
+		<script src='//cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.2/jquery.ui.touch-punch.min.js'></script>
+		<script src='script.js'></script>
+	</body>
+</html>
