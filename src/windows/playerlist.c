@@ -100,18 +100,6 @@ static void refresh_list() {
 }
 
 static void request_data() {
-	Tuplet request_tuple = TupletInteger(KEY_REQUEST, 1);
-
-	DictionaryIterator *iter;
-	app_message_outbox_begin(&iter);
-
-	if (iter == NULL) {
-		return;
-	}
-
-	dict_write_tuplet(iter, &request_tuple);
-	dict_write_end(iter);
-
 	app_message_outbox_send();
 }
 

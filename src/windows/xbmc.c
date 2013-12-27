@@ -48,7 +48,6 @@ void xbmc_in_received_handler(DictionaryIterator *iter) {
 static void send_request(char *request) {
 	Tuplet request_tuple = TupletCString(KEY_REQUEST, request);
 	Tuplet index_tuple = TupletInteger(KEY_INDEX, player.index);
-	Tuplet player_tuple = TupletInteger(KEY_PLAYER, MediaPlayerXBMC);
 
 	DictionaryIterator *iter;
 	app_message_outbox_begin(&iter);
@@ -59,7 +58,6 @@ static void send_request(char *request) {
 
 	dict_write_tuplet(iter, &request_tuple);
 	dict_write_tuplet(iter, &index_tuple);
-	dict_write_tuplet(iter, &player_tuple);
 	dict_write_end(iter);
 
 	app_message_outbox_send();

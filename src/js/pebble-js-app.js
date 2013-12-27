@@ -26,7 +26,7 @@ var players = [];
 
 // test data until we have configuration page
 players.push({title: 'Living Room', subtitle: 'hostname', player: mediaPlayer.PLEX});
-players.push({title: 'iMac', subtitle: 'imac.local', player: mediaPlayer.VLC, server: {host: 'alum.local:8080', pass: 'pass'}});
+players.push({title: 'iMac', subtitle: 'imac.local', player: mediaPlayer.VLC, server: 'alum.local:8080', password: 'pass'});
 players.push({title: 'Bedroom 1', subtitle: '10.0.1.4', player: mediaPlayer.XBMC});
 players.push({title: 'MacBook Pro', subtitle: 'home.example.com', player: mediaPlayer.VLC});
 
@@ -136,20 +136,20 @@ Pebble.addEventListener('ready', function(e) {
 Pebble.addEventListener('appmessage', function(e) {
 	console.log('AppMessage received from Pebble: ' + JSON.stringify(e.payload));
 
-	if (!e.payload.player) {
+	var index = e.payload.index;
+
+	if (!isset(index)) {
 		sendPlayerList();
 		return;
 	}
 
-	var index = e.payload.index || 0;
-
-	if (e.payload.player == mediaPlayer.PLEX) {
+	if (players[index].player == mediaPlayer.PLEX) {
 		return;
 	}
 
-	if (e.payload.player == mediaPlayer.VLC) {
+	if (players[index].player == mediaPlayer.VLC) {
 		var request = e.payload.request || '';
-		if (!players[index].server.host || !players[index].server.pass) {
+		if (!isset(players[index].server) || !isset(players[index].server.host) || !isset(players[index].server.pass))
 			console.log('[VLC] Server options not set!');
 			appMessageQueue.push({'message': {'player': mediaPlayer.VLC, 'title': 'Set options via Pebble app'}});
 			sendAppMessageQueue();
@@ -188,7 +188,7 @@ Pebble.addEventListener('appmessage', function(e) {
 		return;
 	}
 
-	if (e.payload.player == mediaPlayer.XBMC) {
+	if (players[index].player == mediaPlayer.XBMC) {
 		return;
 	}
 });
@@ -208,3 +208,7 @@ Pebble.addEventListener('webviewclosed', function(e) {
 		console.log('[configuration] no options received');
 	}
 });
+
+function isset(i) {
+	return (typeof i != 'undefined')
+}

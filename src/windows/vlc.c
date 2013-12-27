@@ -89,7 +89,6 @@ void vlc_in_received_handler(DictionaryIterator *iter) {
 static void send_request(char *request) {
 	Tuplet request_tuple = TupletCString(KEY_REQUEST, request);
 	Tuplet index_tuple = TupletInteger(KEY_INDEX, player.index);
-	Tuplet player_tuple = TupletInteger(KEY_PLAYER, MediaPlayerVLC);
 
 	DictionaryIterator *iter;
 	app_message_outbox_begin(&iter);
@@ -100,7 +99,6 @@ static void send_request(char *request) {
 
 	dict_write_tuplet(iter, &request_tuple);
 	dict_write_tuplet(iter, &index_tuple);
-	dict_write_tuplet(iter, &player_tuple);
 	dict_write_end(iter);
 
 	app_message_outbox_send();
@@ -179,7 +177,7 @@ static void window_load(Window *window) {
 	text_layer_set_background_color(status_text_layer, GColorClear);
 	text_layer_set_font(status_text_layer, fonts_get_system_font(FONT_KEY_GOTHIC_18));
 
-	status_layer = text_layer_create((GRect) { .origin = { 8, 54 + 15 }, .size = bounds.size });
+	status_layer = text_layer_create((GRect) { .origin = { 5, 54 + 15 }, .size = bounds.size });
 	text_layer_set_text(status_layer, "Loading...");
 	text_layer_set_text_color(status_layer, GColorBlack);
 	text_layer_set_background_color(status_layer, GColorClear);
