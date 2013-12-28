@@ -20,7 +20,7 @@ $(document).bind('pageinit', function() {
 	});
 
 	function addNewPanel(title, newPanel) {
-		newPanel.find('.accordion-toggle').attr('href', '#panel' + (++panels))
+		newPanel.find('.accordion-toggle').attr('href', '#panel' + (++panels));
 		newPanel.find('.panel-collapse').attr('id', 'panel' + panels);
 		newPanel.find('.panel-title').text(title);
 		$('#accordion').append(newPanel.fadeIn());
@@ -31,9 +31,9 @@ $(document).bind('pageinit', function() {
 			newPanel.remove();
 		});
 		newPanel.find('.panel-heading').on('swipe', function() {
-			newPanel.find('.btn-delete').is(':hidden') ? newPanel.find('.btn-delete').show() : newPanel.find('.btn-delete').hide();
+			if(newPanel.find('.btn-delete').is(':hidden')) { newPanel.find('.btn-delete').show(); } else { newPanel.find('.btn-delete').hide(); }
 		});
-	};
+	}
 
 	$('.btn-add-plex').on('click', function() {
 		addNewPanel('New Plex Remote', $('.panel-template-0').first().clone());

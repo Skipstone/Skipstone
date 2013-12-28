@@ -121,7 +121,7 @@ function makeRequestToVLC(index, request) {
 function makeRequestToXBMC(index, request) {
 	request = request || {};
 	var xhr = new XMLHttpRequest();
-	xhr.open('POST', 'http://' + players[index].server.host + '/jsonrpc?', true, '', players[index].server.pass);
+	xhr.open('POST', 'http://' + players[index].server + '/jsonrpc?', true, '', players[index].password);
 	xhr.timeout = options.http.timeout;
 	xhr.onload = function(e) {
 		if (xhr.readyState == 4) {
@@ -138,15 +138,15 @@ function makeRequestToXBMC(index, request) {
 				appMessageQueue.push({'message': {'player': mediaPlayer.XBMC, 'title': 'Error: ' + xhr.statusText}});
 			}
 		}
-	}
+	};
 	xhr.ontimeout = function() {
 		console.log('HTTP request timed out');
-		appMessageQueue.push({'message': {'player': mediaPlayer.VLC, 'title': 'Error: Request timed out!'}});
+		appMessageQueue.push({'message': {'player': mediaPlayer.XBMC, 'title': 'Error: Request timed out!'}});
 		sendAppMessageQueue();
 	};
 	xhr.onerror = function() {
 		console.log('HTTP request returned error');
-		appMessageQueue.push({'message': {'player': mediaPlayer.VLC, 'title': 'Error: Failed to connect!'}});
+		appMessageQueue.push({'message': {'player': mediaPlayer.XBMC, 'title': 'Error: Failed to connect!'}});
 		sendAppMessageQueue();
 	};
 	xhr.setRequestHeader('Content-type','application/json');
@@ -172,7 +172,7 @@ Pebble.addEventListener('appmessage', function(e) {
 	}
 
 	if (players[index].player == mediaPlayer.VLC) {
-		var request = e.payload.request || '';
+		request = e.payload.request || '';
 		if (!isset(players[index].server) || !isset(players[index].password)) {
 			console.log('[VLC] Server options not set!');
 			appMessageQueue.push({'message': {'player': mediaPlayer.VLC, 'title': 'Set options via Pebble app'}});
@@ -213,8 +213,8 @@ Pebble.addEventListener('appmessage', function(e) {
 	}
 
 	if (players[index].player == mediaPlayer.XBMC) {
-		var request = e.payload.request || '';
-		if (!isset(players[index].server) || !isset(players[index].server.host)) {
+		request = e.payload.request || '';
+		if (!isset(players[index].server)) {
 			console.log('[XBMC] Server options not set!');
 			appMessageQueue.push({'message': {'player': mediaPlayer.XBMC, 'title': 'Set options via Pebble app'}});
 			sendAppMessageQueue();
@@ -223,81 +223,63 @@ Pebble.addEventListener('appmessage', function(e) {
 		requestObj = { "jsonrpc": "2.0", "id": 1, "params": {} };
 		switch (request) {
 			case 'input_up':
-				requestObj["method"] = 'Input.Up';
+				requestObj.method = 'Input.Up';
 				break;
 			case 'input_down':
-				requestObj["method"] = 'Input.Down';
+				requestObj.method = 'Input.Down';
 				break;
 			case 'input_left':
-				requestObj["method"] = 'Input.Left';
+				requestObj.method = 'Input.Left';
 				break;
 			case 'input_right':
-				requestObj["method"] = 'Input.Right';
+				requestObj.method = 'Input.Right';
 				break;
 			case 'input_select':
-				requestObj["method"] = 'Input.Select';
+				requestObj.method = 'Input.Select';
 				break;
 			case 'input_back':
-				requestObj["method"] = 'Input.Back';
+				requestObj.method = 'Input.Back';
 				break;
 			case 'play_pause':
-			{
-				requestObj["method"] = 'Player.PlayPause';
-				requestObj["params"]["playerid"] = 1;
+				requestObj.method = 'Player.PlayPause';
+				requestObj.params.playerid = 1;
 				break;
-			}
 			case 'volume_up':
-			{
-				requestObj["method"] = 'Application.SetVolume';
-				requestObj["params"]["volume"] = 'increment';
+				requestObj.method = 'Application.SetVolume';
+				requestObj.params.volume = 'increment';
 				break;
-			}
 			case 'volume_down':
-			{
-				requestObj["method"] = 'Application.SetVolume';
-				requestObj["params"]["volume"] = 'decrement';
+				requestObj.method = 'Application.SetVolume';
+				requestObj.params.volume = 'decrement';
 				break;
-			}
 			case 'volume_min':
-			{
-				requestObj["method"] = 'Application.SetVolume';
-				requestObj["params"]["volume"] = 0;
+				requestObj.method = 'Application.SetVolume';
+				requestObj.params.volume = 0;
 				break;
-			}
 			case 'volume_max':
-			{
-				requestObj["method"] = 'Application.SetVolume';
-				requestObj["params"]["volume"] = 100;
+				requestObj.method = 'Application.SetVolume';
+				requestObj.params.volume = 100;
 				break;
-			}
 			case 'seek_forward_short':
-			{
-				requestObj["method"] = 'Player.Seek';
-				requestObj["params"]["playerid"] = 1;
-				requestObj["params"]["value"] = 'smallforward';
+				requestObj.method = 'Player.Seek';
+				requestObj.params.playerid = 1;
+				requestObj.params.value = 'smallforward';
 				break;
-			}
 			case 'seek_rewind_short':
-			{
-				requestObj["method"] = 'Player.Seek';
-				requestObj["params"]["playerid"] = 1;
-				requestObj["params"]["value"] = 'smallbackward';
+				requestObj.method = 'Player.Seek';
+				requestObj.params.playerid = 1;
+				requestObj.params.value = 'smallbackward';
 				break;
-			}
 			case 'seek_forward_long':
-			{
-				requestObj["method"] = 'Player.Seek';
-				requestObj["params"]["playerid"] = 1;
-				requestObj["params"]["value"] = 'bigforward';
+				requestObj.method = 'Player.Seek';
+				requestObj.params.playerid = 1;
+				requestObj.params.value = 'bigforward';
 				break;
-			}
 			case 'seek_rewind_long':
-			{
-				requestObj["method"] = 'Player.Seek';
-				requestObj["params"]["playerid"] = 1;
-				requestObj["params"]["value"] = 'bigbackward';
+				requestObj.method = 'Player.Seek';
+				requestObj.params.playerid = 1;
+				requestObj.params.value = 'bigbackward';
 				break;
-			}
 		}
 		makeRequestToXBMC(index, requestObj);
 		return;
