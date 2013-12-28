@@ -1,4 +1,4 @@
-var appMessageQueue = [];
+var version = '0.1';
 
 var options = {
 	appMessage: {
@@ -17,27 +17,20 @@ var mediaPlayer = {
 	XBMC: 2
 };
 
-// planned players structure:
-//	title: the title to be displayed in menulayer
-//	subtitle: the subtitle to be displayed in menulayer
-//	player: either of mediaPlayer
-//	server: object of server info (would be different for each player)
-var players = [];
-
-// test data until we have configuration page
-players.push({title: 'Living Room', subtitle: 'hostname', player: mediaPlayer.PLEX});
-players.push({title: 'iMac', subtitle: 'imac.local', player: mediaPlayer.VLC, server: 'alum.local:8080', password: 'pass'});
-players.push({title: 'Bedroom 1', subtitle: '10.0.1.4', player: mediaPlayer.XBMC});
-players.push({title: 'MacBook Pro', subtitle: 'home.example.com', player: mediaPlayer.VLC});
+var appMessageQueue = [];
+var players = JSON.parse(localStorage.getItem('players')) || [];
 
 function sendPlayerList() {
+	if (players.length === 0) {
+		appMessageQueue.push({'message': {index: 0, request: true, title: 'No players found', status: '', player: 255}});
+	}
 	for (var i = 0; i < players.length; i++) {
-		appMessageQueue.push({'message': {
-			'index': i,
-			'request': true,
-			'title': players[i].title,
-			'status': players[i].subtitle,
-			'player': players[i].player
+		appMessageQueue.push({message: {
+			index: i,
+			request: true,
+			title: players[i].title,
+			status: players[i].subtitle,
+			player: parseInt(players[i].player)
 		}});
 	}
 	sendAppMessageQueue();
@@ -78,7 +71,7 @@ function makeRequestToPLEX(index, request) {
 
 function makeRequestToVLC(index, request) {
 	var xhr = new XMLHttpRequest();
-	xhr.open('GET', 'http://' + players[index].server.host + '/requests/status.json?' + request, true, '', players[index].server.pass);
+	xhr.open('GET', 'http://' + players[index].server + '/requests/status.json?' + request, true, '', players[index].password);
 	xhr.timeout = options.http.timeout;
 	xhr.onload = function(e) {
 		if (xhr.readyState == 4) {
@@ -149,7 +142,7 @@ Pebble.addEventListener('appmessage', function(e) {
 
 	if (players[index].player == mediaPlayer.VLC) {
 		var request = e.payload.request || '';
-		if (!isset(players[index].server) || !isset(players[index].server.host) || !isset(players[index].server.pass))
+		if (!isset(players[index].server) || !isset(players[index].password)) {
 			console.log('[VLC] Server options not set!');
 			appMessageQueue.push({'message': {'player': mediaPlayer.VLC, 'title': 'Set options via Pebble app'}});
 			sendAppMessageQueue();
@@ -194,21 +187,28 @@ Pebble.addEventListener('appmessage', function(e) {
 });
 
 Pebble.addEventListener('showConfiguration', function(e) {
-	var uri = '';
+	var data = {
+		version: version,
+		players: players
+	};
+	// will switch to gh-pages when we go live
+	var uri = 'https://rawgithub.com/Skipstone/Skipstone/master/configuration/index.html?data=' + encodeURIComponent(JSON.stringify(data));
 	console.log('[configuration] uri: ' + uri);
 	Pebble.openURL(uri);
 });
 
 Pebble.addEventListener('webviewclosed', function(e) {
 	if (e.response) {
-		var options = JSON.parse(decodeURIComponent(e.response));
-		console.log('[configuration] options received: ' + JSON.stringify(options));
-		// do something. store configuration to localStore and call refresh.
+		var data = JSON.parse(decodeURIComponent(e.response));
+		console.log('[configuration] data received: ' + JSON.stringify(data));
+		players = data.players;
+		localStorage.setItem('players', JSON.stringify(players));
+		sendPlayerList();
 	} else {
-		console.log('[configuration] no options received');
+		console.log('[configuration] no data received');
 	}
 });
 
 function isset(i) {
-	return (typeof i != 'undefined')
+	return (typeof i != 'undefined');
 }

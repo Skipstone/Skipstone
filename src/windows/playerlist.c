@@ -13,8 +13,8 @@ static Player players[MAX_PLAYERS];
 static int num_players;
 
 const char* player_to_str(MediaPlayer player);
+static void clear_cells();
 static void refresh_list();
-static void request_data();
 static uint16_t menu_get_num_sections_callback(struct MenuLayer *menu_layer, void *callback_context);
 static uint16_t menu_get_num_rows_callback(struct MenuLayer *menu_layer, uint16_t section_index, void *callback_context);
 static int16_t menu_get_header_height_callback(struct MenuLayer *menu_layer, uint16_t section_index, void *callback_context);
@@ -63,6 +63,7 @@ void playerlist_in_received_handler(DictionaryIterator *iter) {
 	Tuple *subtitle_tuple = dict_find(iter, KEY_STATUS);
 
 	if (player_tuple && index_tuple && title_tuple && subtitle_tuple) {
+		if(index_tuple->value->int16 == 0) clear_cells();
 		Player player;
 		player.index = index_tuple->value->int16;
 		strncpy(player.title, title_tuple->value->cstring, sizeof(player.title));
@@ -71,7 +72,7 @@ void playerlist_in_received_handler(DictionaryIterator *iter) {
 		players[player.index] = player;
 		num_players++;
 		menu_layer_reload_data_and_mark_dirty(menu_layer);
-		APP_LOG(APP_LOG_LEVEL_DEBUG, "received player [%d] %s - %s", player.index, player.title, player.subtitle);
+		APP_LOG(APP_LOG_LEVEL_DEBUG, "received player %s [%d] %s - %s", player_to_str(player.player), player.index, player.title, player.subtitle);
 	}
 }
 
@@ -85,21 +86,21 @@ const char* player_to_str(MediaPlayer player) {
 			return "VLC";
 		case MediaPlayerXBMC:
 			return "XBMC";
+		case MediaPlayerNONE:
 		default:
 			return "";
 	}
 }
 
-static void refresh_list() {
+static void clear_cells() {
 	memset(players, 0x0, sizeof(players));
 	num_players = 0;
 	menu_layer_set_selected_index(menu_layer, (MenuIndex) { .row = 0, .section = 0 }, MenuRowAlignBottom, false);
 	menu_layer_reload_data_and_mark_dirty(menu_layer);
-	request_data();
-	menu_layer_reload_data_and_mark_dirty(menu_layer);
 }
 
-static void request_data() {
+static void refresh_list() {
+	clear_cells();
 	app_message_outbox_send();
 }
 
@@ -148,6 +149,8 @@ static void menu_select_callback(struct MenuLayer *menu_layer, MenuIndex *cell_i
 			break;
 		case MediaPlayerXBMC:
 			xbmc_init(players[cell_index->row]);
+			break;
+		case MediaPlayerNONE:
 			break;
 	}
 }

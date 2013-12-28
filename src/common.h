@@ -4,6 +4,7 @@ typedef enum {
 	MediaPlayerPLEX = 0x0,
 	MediaPlayerVLC = 0x1,
 	MediaPlayerXBMC = 0x2,
+	MediaPlayerNONE = 0x255,
 } MediaPlayer;
 
 typedef struct {
