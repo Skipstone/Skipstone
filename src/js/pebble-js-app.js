@@ -126,7 +126,38 @@ function makeRequestToVLC(index, request) {
 }
 
 function makeRequestToXBMC(index, request) {
-
+	request = request || {};
+	var xhr = new XMLHttpRequest();
+	xhr.open('POST', 'http://' + players[index].server.host + '/jsonrpc?', true, '', players[index].server.pass);
+	xhr.timeout = options.http.timeout;
+	xhr.onload = function(e) {
+		if (xhr.readyState == 4) {
+			if (xhr.status == 200) {
+				if (xhr.responseText) {
+					res = JSON.parse(xhr.responseText);
+					//TODO: handle response if necessary
+				} else {
+					console.log('Invalid response received! ' + JSON.stringify(xhr));
+					appMessageQueue.push({'message': {'player': mediaPlayer.XBMC, 'title': 'Error: Invalid response received!'}});
+				}
+			} else {
+				console.log('Request returned error code ' + xhr.status.toString());
+				appMessageQueue.push({'message': {'player': mediaPlayer.XBMC, 'title': 'Error: ' + xhr.statusText}});
+			}
+		}
+	}
+	xhr.ontimeout = function() {
+		console.log('HTTP request timed out');
+		appMessageQueue.push({'message': {'player': mediaPlayer.VLC, 'title': 'Error: Request timed out!'}});
+		sendAppMessageQueue();
+	};
+	xhr.onerror = function() {
+		console.log('HTTP request returned error');
+		appMessageQueue.push({'message': {'player': mediaPlayer.VLC, 'title': 'Error: Failed to connect!'}});
+		sendAppMessageQueue();
+	};
+	xhr.setRequestHeader('Content-type','application/json');
+	xhr.send(JSON.stringify(request));
 }
 
 Pebble.addEventListener('ready', function(e) {
@@ -189,6 +220,93 @@ Pebble.addEventListener('appmessage', function(e) {
 	}
 
 	if (players[index].player == mediaPlayer.XBMC) {
+		var request = e.payload.request || '';
+		if (!isset(players[index].server) || !isset(players[index].server.host)) {
+			console.log('[XBMC] Server options not set!');
+			appMessageQueue.push({'message': {'player': mediaPlayer.XBMC, 'title': 'Set options via Pebble app'}});
+			sendAppMessageQueue();
+			return;
+		}
+		requestObj = { "jsonrpc": "2.0", "id": 1, "params": {} };
+		switch (request) {
+			case 'input_up':
+				requestObj["method"] = 'Input.Up';
+				break;
+			case 'input_down':
+				requestObj["method"] = 'Input.Down';
+				break;
+			case 'input_left':
+				requestObj["method"] = 'Input.Left';
+				break;
+			case 'input_right':
+				requestObj["method"] = 'Input.Right';
+				break;
+			case 'input_select':
+				requestObj["method"] = 'Input.Select';
+				break;
+			case 'input_back':
+				requestObj["method"] = 'Input.Back';
+				break;
+			case 'play_pause':
+			{
+				requestObj["method"] = 'Player.PlayPause';
+				requestObj["params"]["playerid"] = 1;
+				break;
+			}
+			case 'volume_up':
+			{
+				requestObj["method"] = 'Application.SetVolume';
+				requestObj["params"]["volume"] = 'increment';
+				break;
+			}
+			case 'volume_down':
+			{
+				requestObj["method"] = 'Application.SetVolume';
+				requestObj["params"]["volume"] = 'decrement';
+				break;
+			}
+			case 'volume_min':
+			{
+				requestObj["method"] = 'Application.SetVolume';
+				requestObj["params"]["volume"] = 0;
+				break;
+			}
+			case 'volume_max':
+			{
+				requestObj["method"] = 'Application.SetVolume';
+				requestObj["params"]["volume"] = 100;
+				break;
+			}
+			case 'seek_forward_short':
+			{
+				requestObj["method"] = 'Player.Seek';
+				requestObj["params"]["playerid"] = 1;
+				requestObj["params"]["value"] = 'smallforward';
+				break;
+			}
+			case 'seek_rewind_short':
+			{
+				requestObj["method"] = 'Player.Seek';
+				requestObj["params"]["playerid"] = 1;
+				requestObj["params"]["value"] = 'smallbackward';
+				break;
+			}
+			case 'seek_forward_long':
+			{
+				requestObj["method"] = 'Player.Seek';
+				requestObj["params"]["playerid"] = 1;
+				requestObj["params"]["value"] = 'bigforward';
+				break;
+			}
+			case 'seek_rewind_long':
+			{
+				requestObj["method"] = 'Player.Seek';
+				requestObj["params"]["playerid"] = 1;
+				requestObj["params"]["value"] = 'bigbackward';
+				break;
+			}
+		}
+		makeRequestToXBMC(index, requestObj);
 		return;
 	}
 });

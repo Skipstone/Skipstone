@@ -114,25 +114,81 @@ static void back_single_click_handler(ClickRecognizerRef recognizer, void *conte
 }
 
 static void up_single_click_handler(ClickRecognizerRef recognizer, void *context) {
+  switch (controlling_type) {
+    case CONTROLLING_TYPE_KEYPAD:
+      send_request("input_up");
+      break;
+    case CONTROLLING_TYPE_SEEK:
+      send_request("seek_rewind_short");
+      break;
+    case CONTROLLING_TYPE_VOLUME:
+      send_request("volume_up");
+      break;
+  }
 }
 
 static void down_single_click_handler(ClickRecognizerRef recognizer, void *context) {
+  switch (controlling_type) {
+    case CONTROLLING_TYPE_KEYPAD:
+      send_request("input_down");
+      break;
+    case CONTROLLING_TYPE_SEEK:
+      send_request("seek_forward_short");
+      break;
+    case CONTROLLING_TYPE_VOLUME:
+      send_request("volume_down");
+      break;
+  }
 }
 
 static void select_single_click_handler(ClickRecognizerRef recognizer, void *context) {
+  switch (controlling_type) {
+    case CONTROLLING_TYPE_KEYPAD:
+      send_request("input_select");
+      break;
+    case CONTROLLING_TYPE_SEEK:
+    case CONTROLLING_TYPE_VOLUME:
+      send_request("play_pause");
+      break;
+  }
 }
 
 static void up_long_click_handler(ClickRecognizerRef recognizer, void *context) {
+  switch (controlling_type) {
+    case CONTROLLING_TYPE_KEYPAD:
+      send_request("input_left");
+      break;
+    case CONTROLLING_TYPE_SEEK:
+      send_request("seek_rewind_long");
+      break;
+    case CONTROLLING_TYPE_VOLUME:
+      send_request("volume_max");
+      break;
+  }
 }
 
 static void down_long_click_handler(ClickRecognizerRef recognizer, void *context) {
+  switch (controlling_type) {
+    case CONTROLLING_TYPE_KEYPAD:
+      send_request("input_right");
+      break;
+    case CONTROLLING_TYPE_SEEK:
+      send_request("seek_forward_long");
+      break;
+    case CONTROLLING_TYPE_VOLUME:
+      send_request("volume_min");
+      break;
+  }
+}
+
+static void select_double_click_handler(ClickRecognizerRef recognizer, void *context) {
+  send_request("input_back");
 }
 
 static void select_long_click_handler(ClickRecognizerRef recognizer, void *context) {
   controlling_type = controlling_type == CONTROLLING_TYPE_VOLUME ? CONTROLLING_TYPE_KEYPAD : controlling_type + 1;
 	display_action_bar_icons();
 }
-
 
 static void click_config_provider(void *context) {
 	window_single_click_subscribe(BUTTON_ID_BACK, back_single_click_handler);
@@ -142,6 +198,7 @@ static void click_config_provider(void *context) {
 	window_long_click_subscribe(BUTTON_ID_UP, 700, up_long_click_handler, NULL);
 	window_long_click_subscribe(BUTTON_ID_DOWN, 700, down_long_click_handler, NULL);
 	window_long_click_subscribe(BUTTON_ID_SELECT, 500, select_long_click_handler, NULL);
+  window_multi_click_subscribe(BUTTON_ID_SELECT, 2, 0, 0, false, select_double_click_handler);
 }
 
 static void window_load(Window *window) {
