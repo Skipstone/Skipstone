@@ -149,7 +149,7 @@ Pebble.addEventListener('appmessage', function(e) {
 
 	if (players[index].player == mediaPlayer.VLC) {
 		var request = e.payload.request || '';
-		if (!isset(players[index].server) || !isset(players[index].server.host) || !isset(players[index].server.pass))
+		if (!isset(players[index].server) || !isset(players[index].server.host) || !isset(players[index].server.pass)) {
 			console.log('[VLC] Server options not set!');
 			appMessageQueue.push({'message': {'player': mediaPlayer.VLC, 'title': 'Set options via Pebble app'}});
 			sendAppMessageQueue();
