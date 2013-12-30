@@ -6,7 +6,7 @@ $(document).bind('pageinit', function() {
 
 	var data = /data=([^&]*)/.exec(location.search);
 	if (data && data[1]) {
-		var d = JSON.parse(decodeURIComponent(data[1]));
+		var d = JSON.parse(atob(decodeURIComponent(data[1])));
 		players = d.players;
 		if(d.version != version) $('.update-alert').show();
 	}
@@ -60,7 +60,7 @@ $(document).bind('pageinit', function() {
 		var ret = {
 			players: players
 		};
-		document.location = 'pebblejs://close#' + encodeURIComponent(JSON.stringify(ret));
+		document.location = 'pebblejs://close#' + encodeURIComponent(btoa(JSON.stringify(ret)));
 	});
 
 	$('.panel-container').sortable({
