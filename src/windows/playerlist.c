@@ -66,8 +66,8 @@ void playerlist_in_received_handler(DictionaryIterator *iter) {
 		if(index_tuple->value->int16 == 0) clear_cells();
 		Player player;
 		player.index = index_tuple->value->int16;
-		strncpy(player.title, title_tuple->value->cstring, sizeof(player.title));
-		strncpy(player.subtitle, subtitle_tuple->value->cstring, sizeof(player.subtitle));
+		strncpy(player.title, title_tuple->value->cstring, sizeof(player.title) - 1);
+		strncpy(player.subtitle, subtitle_tuple->value->cstring, sizeof(player.subtitle) - 1);
 		player.player = player_tuple->value->int16;
 		players[player.index] = player;
 		num_players++;
