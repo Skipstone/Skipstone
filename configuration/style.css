@@ -2,13 +2,16 @@
 	display: none;
 }
 
-.btn-extra-padding {
-	padding-left: 22px;
-	padding-right: 22px;
+.btn-save {
+	margin-bottom: 20px;
 }
 
 .add-player {
 	text-align: center;
+}
+
+.btn-add-player {
+	width: 32%;
 }
 
 .panel-container {

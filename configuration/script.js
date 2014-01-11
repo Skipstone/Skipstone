@@ -4,7 +4,7 @@ $(document).bind('pageinit', function() {
 	var players = [];
 	var panels = 0;
 
-	var data = /data=([^&]*)/.exec(location.search);
+	var data = /data=([^&|^\/]*)/.exec(location.search);
 	if (data && data[1]) {
 		var d = JSON.parse(atob(decodeURIComponent(data[1])));
 		players = d.players;
