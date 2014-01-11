@@ -60,8 +60,11 @@ function sendAppMessageQueue() {
 				}
 			);
 		} else {
+			appMessageQueue.shift();
 			console.log('Failed sending AppMessage for transactionId:' + currentAppMessage.transactionId + '. Bailing. ' + JSON.stringify(currentAppMessage.message));
 		}
+	} else {
+		console.log('AppMessage queue is empty.');
 	}
 }
 
