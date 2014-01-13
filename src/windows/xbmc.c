@@ -5,6 +5,7 @@
 #include "../progress_bar.h"
 
 static void send_request(char *request);
+static void display_action_bar_icons();
 static void back_single_click_handler(ClickRecognizerRef recognizer, void *context);
 static void up_single_click_handler(ClickRecognizerRef recognizer, void *context);
 static void down_single_click_handler(ClickRecognizerRef recognizer, void *context);
@@ -31,10 +32,13 @@ static GBitmap *action_icon_down;
 static GBitmap *action_icon_select;
 
 static TextLayer *title_layer;
+static TextLayer *status_text_layer;
+static TextLayer *status_layer;
 static TextLayer *volume_text_layer;
 static TextLayer *volume_layer;
 
 static ProgressBarLayer *volume_bar;
+static ProgressBarLayer *seek_bar;
 
 static Player player;
 
@@ -45,6 +49,7 @@ typedef enum {
 } CONTROLLING_TYPE;
 
 static CONTROLLING_TYPE controlling_type;
+static bool playing;
 
 void xbmc_init(Player p) {
 	player = p;
@@ -65,13 +70,29 @@ void xbmc_destroy(void) {
 }
 
 void xbmc_in_received_handler(DictionaryIterator *iter) {
+  Tuple *title_tuple = dict_find(iter, KEY_TITLE);
 	Tuple *volume_tuple = dict_find(iter, KEY_VOLUME);
+  Tuple *status_tuple = dict_find(iter, KEY_STATUS);
+	Tuple *seek_tuple = dict_find(iter, KEY_SEEK);
 
+  if (title_tuple) {
+		text_layer_set_text(title_layer, title_tuple->value->cstring);
+	}
 	if (volume_tuple) {
 		static char vol[5];
 		snprintf(vol, sizeof(vol), "%d%%", volume_tuple->value->int16);
 		text_layer_set_text(volume_layer, vol);
 		progress_bar_layer_set_value(volume_bar, volume_tuple->value->int16);
+	}
+  if (status_tuple) {
+		text_layer_set_text(status_layer, status_tuple->value->cstring);
+    playing = (strcmp(status_tuple->value->cstring, "Playing") == 0);
+    if (controlling_type != CONTROLLING_TYPE_KEYPAD) {
+      display_action_bar_icons();
+    }
+	}
+  if (seek_tuple) {
+		progress_bar_layer_set_value(seek_bar, seek_tuple->value->int16);
 	}
 }
 
@@ -108,14 +129,14 @@ static void display_action_bar_icons() {
     {
       action_bar_layer_set_icon(action_bar, BUTTON_ID_UP, action_icon_rewind);
       action_bar_layer_set_icon(action_bar, BUTTON_ID_DOWN, action_icon_forward);
-      action_bar_layer_set_icon(action_bar, BUTTON_ID_SELECT, action_icon_play);
+      action_bar_layer_set_icon(action_bar, BUTTON_ID_SELECT, (playing) ? action_icon_pause : action_icon_play);
       break;
     }
     case CONTROLLING_TYPE_VOLUME:
     {
       action_bar_layer_set_icon(action_bar, BUTTON_ID_UP, action_icon_volume_up);
       action_bar_layer_set_icon(action_bar, BUTTON_ID_DOWN, action_icon_volume_down);
-      action_bar_layer_set_icon(action_bar, BUTTON_ID_SELECT, action_icon_play);
+      action_bar_layer_set_icon(action_bar, BUTTON_ID_SELECT, (playing) ? action_icon_pause : action_icon_play);
       break;
     }
   }
@@ -242,6 +263,18 @@ static void window_load(Window *window) {
 	text_layer_set_background_color(title_layer, GColorClear);
 	text_layer_set_font(title_layer, fonts_get_system_font(FONT_KEY_GOTHIC_24_BOLD));
 
+  status_text_layer = text_layer_create((GRect) { .origin = { 5, 54 }, .size = bounds.size });
+	text_layer_set_text(status_text_layer, "Status:");
+	text_layer_set_text_color(status_text_layer, GColorBlack);
+	text_layer_set_background_color(status_text_layer, GColorClear);
+	text_layer_set_font(status_text_layer, fonts_get_system_font(FONT_KEY_GOTHIC_18));
+
+	status_layer = text_layer_create((GRect) { .origin = { 5, 54 + 15 }, .size = bounds.size });
+	text_layer_set_text(status_layer, "Loading...");
+	text_layer_set_text_color(status_layer, GColorBlack);
+	text_layer_set_background_color(status_layer, GColorClear);
+	text_layer_set_font(status_layer, fonts_get_system_font(FONT_KEY_GOTHIC_28_BOLD));
+
   volume_text_layer = text_layer_create((GRect) { .origin = { 5, 108 }, .size = bounds.size });
 	text_layer_set_text(volume_text_layer, "Volume:");
 	text_layer_set_text_color(volume_text_layer, GColorBlack);
@@ -260,10 +293,19 @@ static void window_load(Window *window) {
 	progress_bar_layer_set_frame_color(volume_bar, GColorBlack);
 	progress_bar_layer_set_bar_color(volume_bar, GColorBlack);
 
+  seek_bar = progress_bar_layer_create((GRect) { .origin = { 5, 138 }, .size = { 115, 8 } });
+	progress_bar_layer_set_orientation(seek_bar, ProgressBarOrientationHorizontal);
+	progress_bar_layer_set_range(seek_bar, 0, 100);
+	progress_bar_layer_set_frame_color(seek_bar, GColorBlack);
+	progress_bar_layer_set_bar_color(seek_bar, GColorBlack);
+
+  layer_add_child(window_layer, text_layer_get_layer(title_layer));
+  layer_add_child(window_layer, text_layer_get_layer(status_text_layer));
+	layer_add_child(window_layer, text_layer_get_layer(status_layer));
   layer_add_child(window_layer, text_layer_get_layer(volume_text_layer));
 	layer_add_child(window_layer, text_layer_get_layer(volume_layer));
 	layer_add_child(window_layer, volume_bar);
-	layer_add_child(window_layer, text_layer_get_layer(title_layer));
+  layer_add_child(window_layer, seek_bar);
 }
 
 static void window_unload(Window *window) {
@@ -278,7 +320,10 @@ static void window_unload(Window *window) {
   gbitmap_destroy(action_icon_select);
 	action_bar_layer_destroy(action_bar);
 	text_layer_destroy(title_layer);
+  text_layer_destroy(status_text_layer);
+	text_layer_destroy(status_layer);
   text_layer_destroy(volume_text_layer);
 	text_layer_destroy(volume_layer);
 	progress_bar_layer_destroy(volume_bar);
+  progress_bar_layer_destroy(seek_bar);
 }
