@@ -122,7 +122,7 @@ function makeRequestToVLC(index, request) {
 	xhr.send(null);
 }
 
-function makeRequestToXBMC(index, request) {
+function makeRequestToXBMC(index, request, statusRequest) {
 	request = request || {};
 	var xhr = new XMLHttpRequest();
 	xhr.open('POST', 'http://' + players[index].server + '/jsonrpc?', true);
@@ -133,7 +133,18 @@ function makeRequestToXBMC(index, request) {
 			if (xhr.status == 200) {
 				if (xhr.responseText) {
 					res = JSON.parse(xhr.responseText);
-					//TODO: handle response if necessary
+					if (statusRequest) {
+						if (res.result.volume) {
+							var volume = res.result.volume || 0;
+							volume = (volume > 100) ? 100 : volume;
+							volume = Math.round(volume);
+							appMessageQueue.push({'message': {'player': mediaPlayer.XBMC, 'volume': volume}});
+						}
+						sendAppMessageQueue();
+					} else if (request.params.hasOwnProperty('volume') || !request.hasOwnProperty('method')) {
+						volumeRequest = {"jsonrpc":"2.0","method":"Application.GetProperties","params":{"properties":["volume"]},"id":"1"};
+						makeRequestToXBMC(index, volumeRequest, true);
+					} 
 				} else {
 					console.log('Invalid response received! ' + JSON.stringify(xhr));
 					appMessageQueue.push({'message': {'player': mediaPlayer.XBMC, 'title': 'Error: Invalid response received!'}});
@@ -284,6 +295,8 @@ Pebble.addEventListener('appmessage', function(e) {
 				requestObj.method = 'Player.Seek';
 				requestObj.params.playerid = 1;
 				requestObj.params.value = 'bigbackward';
+				break;
+			default:
 				break;
 		}
 		makeRequestToXBMC(index, requestObj);

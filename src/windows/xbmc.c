@@ -2,6 +2,7 @@
 #include "xbmc.h"
 #include "../libs/pebble-assist.h"
 #include "../common.h"
+#include "../progress_bar.h"
 
 static void send_request(char *request);
 static void back_single_click_handler(ClickRecognizerRef recognizer, void *context);
@@ -30,6 +31,10 @@ static GBitmap *action_icon_down;
 static GBitmap *action_icon_select;
 
 static TextLayer *title_layer;
+static TextLayer *volume_text_layer;
+static TextLayer *volume_layer;
+
+static ProgressBarLayer *volume_bar;
 
 static Player player;
 
@@ -60,6 +65,14 @@ void xbmc_destroy(void) {
 }
 
 void xbmc_in_received_handler(DictionaryIterator *iter) {
+	Tuple *volume_tuple = dict_find(iter, KEY_VOLUME);
+
+	if (volume_tuple) {
+		static char vol[5];
+		snprintf(vol, sizeof(vol), "%d%%", volume_tuple->value->int16);
+		text_layer_set_text(volume_layer, vol);
+		progress_bar_layer_set_value(volume_bar, volume_tuple->value->int16);
+	}
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - //
@@ -229,6 +242,27 @@ static void window_load(Window *window) {
 	text_layer_set_background_color(title_layer, GColorClear);
 	text_layer_set_font(title_layer, fonts_get_system_font(FONT_KEY_GOTHIC_24_BOLD));
 
+  volume_text_layer = text_layer_create((GRect) { .origin = { 5, 108 }, .size = bounds.size });
+	text_layer_set_text(volume_text_layer, "Volume:");
+	text_layer_set_text_color(volume_text_layer, GColorBlack);
+	text_layer_set_background_color(volume_text_layer, GColorClear);
+	text_layer_set_font(volume_text_layer, fonts_get_system_font(FONT_KEY_GOTHIC_18));
+
+	volume_layer = text_layer_create((GRect) { .origin = { 58, 102 }, .size = bounds.size });
+	text_layer_set_text(volume_layer, "0%");
+	text_layer_set_text_color(volume_layer, GColorBlack);
+	text_layer_set_background_color(volume_layer, GColorClear);
+	text_layer_set_font(volume_layer, fonts_get_system_font(FONT_KEY_GOTHIC_24_BOLD));
+
+	volume_bar = progress_bar_layer_create((GRect) { .origin = { 110, 58 }, .size = { 8, 76 } });
+	progress_bar_layer_set_orientation(volume_bar, ProgressBarOrientationVertical);
+	progress_bar_layer_set_range(volume_bar, 0, 100);
+	progress_bar_layer_set_frame_color(volume_bar, GColorBlack);
+	progress_bar_layer_set_bar_color(volume_bar, GColorBlack);
+
+  layer_add_child(window_layer, text_layer_get_layer(volume_text_layer));
+	layer_add_child(window_layer, text_layer_get_layer(volume_layer));
+	layer_add_child(window_layer, volume_bar);
 	layer_add_child(window_layer, text_layer_get_layer(title_layer));
 }
 
@@ -244,4 +278,7 @@ static void window_unload(Window *window) {
   gbitmap_destroy(action_icon_select);
 	action_bar_layer_destroy(action_bar);
 	text_layer_destroy(title_layer);
+  text_layer_destroy(volume_text_layer);
+	text_layer_destroy(volume_layer);
+	progress_bar_layer_destroy(volume_bar);
 }
