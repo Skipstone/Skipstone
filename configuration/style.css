@@ -1,5 +1,9 @@
-.ui-loading, .ui-loader, .update-alert, .panel-template {
+.ui-loading, .ui-loader, .panel-template {
 	display: none;
+}
+
+.container {
+	margin-top: 20px;
 }
 
 .btn-save {
