@@ -1,5 +1,3 @@
-var version = '0.1';
-
 var options = {
 	appMessage: {
 		maxTries: 3,

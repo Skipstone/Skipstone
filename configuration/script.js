@@ -1,6 +1,5 @@
 $(document).bind('pageinit', function() {
 
-	var version = '0.1';
 	var players = [];
 	var panels = 0;
 
