@@ -136,15 +136,19 @@ var XBMCStatusUpdate = {
 		makeRequestToXBMC(index, volumeRequest, true);
 		titleRequest = {"jsonrpc":"2.0","method":"Player.GetItem","params":{"playerid":1,"properties":["title"]},"id":"1"};
 		makeRequestToXBMC(index, titleRequest, true);
-		seekRequest = {"jsonrpc":"2.0","method":"Player.GetProperties","id": 1,"params":{"playerid":1,"properties":["percentage","speed"]}};
+		seekRequest = {"jsonrpc":"2.0","method":"Player.GetProperties","id": "1","params":{"playerid":1,"properties":["percentage","speed"]}};
 		makeRequestToXBMC(index, seekRequest, true);
 	},
-	checkForReadyUpdate: function() {
+	checkForReadyUpdate: function(index) {
 		if (this.volumeReceived && this.titleReceived && this.seekReceived) {
-			appMessageQueue.push({'message': {'player': mediaPlayer.XBMC, 'volume': this.volume, 'title': this.title, 'status': this.status, 'seek': this.seek}});
-			sendAppMessageQueue();
+			this.sendUpdate();
 			this.reset();
 		}
+	},
+	sendUpdate: function(index) {
+		var title  = this.title || players[index].title;
+		appMessageQueue.push({'message': {'player': mediaPlayer.XBMC, 'volume': this.volume, 'title': title, 'status': this.status, 'seek': this.seek}});
+		sendAppMessageQueue();
 	},
 	reset: function() {
 		this.volumeReceived = this.titleReceived = this.seekReceived = false;
@@ -167,6 +171,9 @@ function makeRequestToXBMC(index, request, statusRefresh) {
 				if (xhr.responseText) {
 					res = JSON.parse(xhr.responseText);
 					if (statusRefresh) {
+						if (res.hasOwnProperty('error')) {
+							XBMCStatusUpdate.sendUpdate(index);
+						};
 						if (!res.hasOwnProperty('result')) return;
 						if (res.result.volume) {
 							var volume = res.result.volume || 0;
@@ -174,13 +181,13 @@ function makeRequestToXBMC(index, request, statusRefresh) {
 							volume = Math.round(volume);
 							XBMCStatusUpdate.volume = volume;
 							XBMCStatusUpdate.volumeReceived = true;
-							XBMCStatusUpdate.checkForReadyUpdate();
+							XBMCStatusUpdate.checkForReadyUpdate(index);
 						} else if (res.result.item) {
 							title  = res.result.item.title || players[index].title;
 							title  = title.substring(0,30);
 							XBMCStatusUpdate.title = title;
 							XBMCStatusUpdate.titleReceived = true;
-							XBMCStatusUpdate.checkForReadyUpdate();
+							XBMCStatusUpdate.checkForReadyUpdate(index);
 						} else if (res.result.percentage) {
 							status = res.result.speed ? "Playing" : "Paused";
 							seek   = res.result.percentage || 0;
@@ -188,7 +195,7 @@ function makeRequestToXBMC(index, request, statusRefresh) {
 							XBMCStatusUpdate.status = status;
 							XBMCStatusUpdate.seek = seek;
 							XBMCStatusUpdate.seekReceived = true;
-							XBMCStatusUpdate.checkForReadyUpdate();
+							XBMCStatusUpdate.checkForReadyUpdate(index);
 						}
 					} else {
 						XBMCStatusUpdate.requestUpdates(index);
