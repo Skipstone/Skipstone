@@ -154,7 +154,7 @@ var XBMCStatusUpdate = {
 		this.volumeReceived = this.titleReceived = this.seekReceived = false;
 		this.volume = 0;
 		this.title = "";
-		this.status = "Loading..."
+		this.status = "Loading...";
 		this.seek = 0;
 	}
 };
@@ -173,7 +173,7 @@ function makeRequestToXBMC(index, request, statusRefresh) {
 					if (statusRefresh) {
 						if (res.hasOwnProperty('error')) {
 							XBMCStatusUpdate.sendUpdate(index);
-						};
+						}
 						if (!res.hasOwnProperty('result')) return;
 						if (res.result.volume) {
 							var volume = res.result.volume || 0;
@@ -355,7 +355,6 @@ Pebble.addEventListener('appmessage', function(e) {
 			default:
 				XBMCStatusUpdate.requestUpdates(index);
 				return;
-				break;
 		}
 		makeRequestToXBMC(index, requestObj, false);
 		setTimeout(function() {
