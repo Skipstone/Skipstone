@@ -6,6 +6,9 @@ var options = {
 	},
 	http: {
 		timeout: 20000
+	},
+	timer: {
+		statusTimer: 5000,
 	}
 };
 
@@ -121,7 +124,9 @@ function makeRequestToVLC(index, request) {
 }
 
 var XBMCStatusUpdate = {
-	responseCount: 0,
+	volumeReceived: false,
+	titleReceived: false,
+	seekReceived: false,
 	volume: 0,
 	title: "",
 	status: "Loading...",
@@ -135,14 +140,14 @@ var XBMCStatusUpdate = {
 		makeRequestToXBMC(index, seekRequest, true);
 	},
 	checkForReadyUpdate: function() {
-		if (this.responseCount >= 3) {
+		if (this.volumeReceived && this.titleReceived && this.seekReceived) {
 			appMessageQueue.push({'message': {'player': mediaPlayer.XBMC, 'volume': this.volume, 'title': this.title, 'status': this.status, 'seek': this.seek}});
 			sendAppMessageQueue();
 			this.reset();
 		}
 	},
 	reset: function() {
-		this.responseCount = 0;
+		this.volumeReceived = this.titleReceived = this.seekReceived = false;
 		this.volume = 0;
 		this.title = "";
 		this.status = "Loading..."
@@ -168,13 +173,13 @@ function makeRequestToXBMC(index, request, statusRefresh) {
 							volume = (volume > 100) ? 100 : volume;
 							volume = Math.round(volume);
 							XBMCStatusUpdate.volume = volume;
-							XBMCStatusUpdate.responseCount++;
+							XBMCStatusUpdate.volumeReceived = true;
 							XBMCStatusUpdate.checkForReadyUpdate();
 						} else if (res.result.item) {
 							title  = res.result.item.title || players[index].title;
 							title  = title.substring(0,30);
 							XBMCStatusUpdate.title = title;
-							XBMCStatusUpdate.responseCount++;
+							XBMCStatusUpdate.titleReceived = true;
 							XBMCStatusUpdate.checkForReadyUpdate();
 						} else if (res.result.percentage) {
 							status = res.result.speed ? "Playing" : "Paused";
@@ -182,7 +187,7 @@ function makeRequestToXBMC(index, request, statusRefresh) {
 							seek   = Math.round(seek);
 							XBMCStatusUpdate.status = status;
 							XBMCStatusUpdate.seek = seek;
-							XBMCStatusUpdate.responseCount++;
+							XBMCStatusUpdate.seekReceived = true;
 							XBMCStatusUpdate.checkForReadyUpdate();
 						}
 					} else {
@@ -346,6 +351,9 @@ Pebble.addEventListener('appmessage', function(e) {
 				break;
 		}
 		makeRequestToXBMC(index, requestObj, false);
+		setTimeout(function() {
+			XBMCStatusUpdate.requestUpdates(index);
+		}, options.timer.statusTimer);
 		return;
 	}
 });
