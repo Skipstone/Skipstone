@@ -5,9 +5,13 @@ $(document).bind('pageinit', function() {
 
 	var data = /data=([^&|^\/]*)/.exec(location.search);
 	if (data && data[1]) {
-		var d = JSON.parse(atob(decodeURIComponent(data[1])));
-		players = d.players;
-		if(d.version != version) $('.update-alert').show();
+		try {
+			var d = JSON.parse(atob(decodeURIComponent(data[1])));
+			players = d.players;
+			if(d.version != version) $('.update-alert').show();
+		} catch(err) {
+			
+		}
 	}
 
 	$.each(players, function(index, player) {

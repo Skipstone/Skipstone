@@ -332,7 +332,6 @@ Pebble.addEventListener('appmessage', function(e) {
 
 Pebble.addEventListener('showConfiguration', function(e) {
 	var data = {
-		version: version,
 		players: players
 	};
 	// will switch to gh-pages when we go live
