@@ -120,7 +120,37 @@ function makeRequestToVLC(index, request) {
 	xhr.send(null);
 }
 
-function makeRequestToXBMC(index, request, refreshStatus) {
+var XBMCStatusUpdate = {
+	responseCount: 0,
+	volume: 0,
+	title: "",
+	status: "Loading...",
+	seek: 0,
+	requestUpdates: function(index) {
+		volumeRequest = {"jsonrpc":"2.0","method":"Application.GetProperties","params":{"properties":["volume"]},"id":"1"};
+		makeRequestToXBMC(index, volumeRequest, true);
+		titleRequest = {"jsonrpc":"2.0","method":"Player.GetItem","params":{"playerid":1,"properties":["title"]},"id":"1"};
+		makeRequestToXBMC(index, titleRequest, true);
+		seekRequest = {"jsonrpc":"2.0","method":"Player.GetProperties","id": 1,"params":{"playerid":1,"properties":["percentage","speed"]}};
+		makeRequestToXBMC(index, seekRequest, true);
+	},
+	checkForReadyUpdate: function() {
+		if (this.responseCount >= 3) {
+			appMessageQueue.push({'message': {'player': mediaPlayer.XBMC, 'volume': this.volume, 'title': this.title, 'status': this.status, 'seek': this.seek}});
+			sendAppMessageQueue();
+			this.reset();
+		}
+	},
+	reset: function() {
+		this.responseCount = 0;
+		this.volume = 0;
+		this.title = "";
+		this.status = "Loading..."
+		this.seek = 0;
+	}
+};
+
+function makeRequestToXBMC(index, request, statusRefresh) {
 	request = request || {};
 	var xhr = new XMLHttpRequest();
 	xhr.open('POST', 'http://' + players[index].server + '/jsonrpc?', true);
@@ -131,34 +161,32 @@ function makeRequestToXBMC(index, request, refreshStatus) {
 			if (xhr.status == 200) {
 				if (xhr.responseText) {
 					res = JSON.parse(xhr.responseText);
-					if (refreshStatus == 'request') {
+					if (statusRefresh) {
+						if (!res.hasOwnProperty('result')) return;
 						if (res.result.volume) {
 							var volume = res.result.volume || 0;
 							volume = (volume > 100) ? 100 : volume;
 							volume = Math.round(volume);
-							appMessageQueue.push({'message': {'player': mediaPlayer.XBMC, 'volume': volume}});
+							XBMCStatusUpdate.volume = volume;
+							XBMCStatusUpdate.responseCount++;
+							XBMCStatusUpdate.checkForReadyUpdate();
 						} else if (res.result.item) {
 							title  = res.result.item.title || players[index].title;
 							title  = title.substring(0,30);
-							appMessageQueue.push({'message': {'player': mediaPlayer.XBMC, 'title': title}});
+							XBMCStatusUpdate.title = title;
+							XBMCStatusUpdate.responseCount++;
+							XBMCStatusUpdate.checkForReadyUpdate();
 						} else if (res.result.percentage) {
 							status = res.result.speed ? "Playing" : "Paused";
 							seek   = res.result.percentage || 0;
 							seek   = Math.round(seek);
-							appMessageQueue.push({'message': {'player': mediaPlayer.XBMC, 'status': status, 'seek': seek}});
+							XBMCStatusUpdate.status = status;
+							XBMCStatusUpdate.seek = seek;
+							XBMCStatusUpdate.responseCount++;
+							XBMCStatusUpdate.checkForReadyUpdate();
 						}
-						sendAppMessageQueue();
-					} else if (refreshStatus) {
-						if (refreshStatus == 'volume') {
-							volumeRequest = {"jsonrpc":"2.0","method":"Application.GetProperties","params":{"properties":["volume"]},"id":"1"};
-							makeRequestToXBMC(index, volumeRequest, 'request');
-						} else if (refreshStatus == 'title') {
-							titleRequest = {"jsonrpc":"2.0","method":"Player.GetItem","params":{"playerid":1,"properties":["title"]},"id":"1"};
-							makeRequestToXBMC(index, titleRequest, 'request');
-						} else if (refreshStatus == 'seek') {
-							seekRequest = {"jsonrpc":"2.0","method":"Player.GetProperties","id": 1,"params":{"playerid":1,"properties":["percentage","speed"]}};
-							makeRequestToXBMC(index, seekRequest, 'request');
-						}
+					} else {
+						XBMCStatusUpdate.requestUpdates(index);
 					}
 				} else {
 					console.log('Invalid response received! ' + JSON.stringify(xhr));
@@ -275,57 +303,49 @@ Pebble.addEventListener('appmessage', function(e) {
 			case 'play_pause':
 				requestObj.method = 'Player.PlayPause';
 				requestObj.params.playerid = 1;
-				refreshStatus = 'seek';
 				break;
 			case 'volume_up':
 				requestObj.method = 'Application.SetVolume';
 				requestObj.params.volume = 'increment';
-				refreshStatus = 'volume';
 				break;
 			case 'volume_down':
 				requestObj.method = 'Application.SetVolume';
 				requestObj.params.volume = 'decrement';
-				refreshStatus = 'volume';
 				break;
 			case 'volume_min':
 				requestObj.method = 'Application.SetVolume';
 				requestObj.params.volume = 0;
-				refreshStatus = 'volume';
 				break;
 			case 'volume_max':
 				requestObj.method = 'Application.SetVolume';
 				requestObj.params.volume = 100;
-				refreshStatus = 'volume';
 				break;
 			case 'seek_forward_short':
 				requestObj.method = 'Player.Seek';
 				requestObj.params.playerid = 1;
 				requestObj.params.value = 'smallforward';
-				refreshStatus = 'seek';
 				break;
 			case 'seek_rewind_short':
 				requestObj.method = 'Player.Seek';
 				requestObj.params.playerid = 1;
 				requestObj.params.value = 'smallbackward';
-				refreshStatus = 'seek';
 				break;
 			case 'seek_forward_long':
 				requestObj.method = 'Player.Seek';
 				requestObj.params.playerid = 1;
 				requestObj.params.value = 'bigforward';
-				refreshStatus = 'seek';
 				break;
 			case 'seek_rewind_long':
 				requestObj.method = 'Player.Seek';
 				requestObj.params.playerid = 1;
 				requestObj.params.value = 'bigbackward';
-				refreshStatus = 'seek';
 				break;
 			default:
-				refreshStatus = 'volume';
+				XBMCStatusUpdate.requestUpdates(index);
+				return;
 				break;
 		}
-		makeRequestToXBMC(index, requestObj, refreshStatus);
+		makeRequestToXBMC(index, requestObj, false);
 		return;
 	}
 });
