@@ -129,7 +129,7 @@ static void menu_draw_row_callback(GContext *ctx, const Layer *cell_layer, MenuI
 		menu_cell_basic_draw(ctx, cell_layer, "Loading...", NULL, NULL);
 	} else {
 		graphics_context_set_text_color(ctx, GColorBlack);
-		graphics_draw_text(ctx, players[cell_index->row].title, fonts_get_system_font(FONT_KEY_GOTHIC_24_BOLD), (GRect) { .origin = { 4, 0 }, .size = { PEBBLE_WIDTH - 8, 24 } }, GTextOverflowModeTrailingEllipsis, GTextAlignmentLeft, NULL);
+		graphics_draw_text(ctx, players[cell_index->row].title, fonts_get_system_font(FONT_KEY_GOTHIC_24_BOLD), (GRect) { .origin = { 4, -4 }, .size = { PEBBLE_WIDTH - 8, 28 } }, GTextOverflowModeTrailingEllipsis, GTextAlignmentLeft, NULL);
 		graphics_draw_text(ctx, players[cell_index->row].subtitle, fonts_get_system_font(FONT_KEY_GOTHIC_18), (GRect) { .origin = { 4, 24 }, .size = { 100, 20 } }, GTextOverflowModeTrailingEllipsis, GTextAlignmentLeft, NULL);
 		graphics_draw_text(ctx, player_to_str(players[cell_index->row].player), fonts_get_system_font(FONT_KEY_GOTHIC_18), (GRect) { .origin = { 4, 24 }, .size = { PEBBLE_WIDTH - 8, 20 } }, GTextOverflowModeTrailingEllipsis, GTextAlignmentRight, NULL);
 	}
