@@ -21,6 +21,12 @@
 	"resources": {
 		"media": [
 			{
+				"menuIcon": true,
+				"type": "png",
+				"name": "IMAGE_MENU_ICON",
+				"file": "images/icon.png"
+			},
+			{
 				"type": "png",
 				"name": "ICON_VOLUME_UP",
 				"file": "images/volume_up.png"
