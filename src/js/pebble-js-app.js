@@ -368,8 +368,7 @@ Pebble.addEventListener('showConfiguration', function(e) {
 	var data = {
 		players: players
 	};
-	// will switch to gh-pages when we go live
-	var uri = 'https://rawgithub.com/Skipstone/Skipstone/master/configuration/index.html?data=' + encodeURIComponent(base64_encode(JSON.stringify(data)));
+	var uri = 'https://skipstone.github.io/Skipstone/index.html?data=' + encodeURIComponent(base64_encode(JSON.stringify(data)));
 	console.log('[configuration] uri: ' + uri);
 	Pebble.openURL(uri);
 });
