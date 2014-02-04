@@ -368,7 +368,7 @@ Pebble.addEventListener('showConfiguration', function(e) {
 	var data = {
 		players: players
 	};
-	var uri = 'https://skipstone.github.io/Skipstone/index.html?data=' + encodeURIComponent(base64_encode(JSON.stringify(data)));
+	var uri = 'http://skipstone.github.io/Skipstone/index.html?data=' + encodeURIComponent(base64_encode(JSON.stringify(data)));
 	console.log('[configuration] uri: ' + uri);
 	Pebble.openURL(uri);
 });
