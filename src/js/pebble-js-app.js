@@ -163,7 +163,7 @@ function makeRequestToXBMC(index, request, statusRefresh) {
 	request = request || {};
 	var xhr = new XMLHttpRequest();
 	xhr.open('POST', 'http://' + players[index].server + '/jsonrpc?', true);
-	xhr.setRequestHeader('Authorization', 'Basic ' + base64_encode(':' + players[index].password));
+	xhr.setRequestHeader('Authorization', 'Basic ' + base64_encode(players[index].username + ':' + players[index].password));
 	xhr.timeout = options.http.timeout;
 	xhr.onload = function(e) {
 		if (xhr.readyState == 4) {
