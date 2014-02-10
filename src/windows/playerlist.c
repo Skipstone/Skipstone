@@ -2,9 +2,9 @@
 #include "playerlist.h"
 #include "../libs/pebble-assist.h"
 #include "../common.h"
-#include "plex.h"
-#include "vlc.h"
-#include "xbmc.h"
+#include "plex/plex.h"
+#include "vlc/vlc.h"
+#include "xbmc/xbmc.h"
 
 #define MAX_PLAYERS 20
 
@@ -72,8 +72,19 @@ void playerlist_in_received_handler(DictionaryIterator *iter) {
 		players[player.index] = player;
 		num_players++;
 		menu_layer_reload_data_and_mark_dirty(menu_layer);
-		APP_LOG(APP_LOG_LEVEL_DEBUG, "received player %s [%d] %s - %s", player_to_str(player.player), player.index, player.title, player.subtitle);
 	}
+}
+
+void playerlist_in_dropped_handler(AppMessageResult reason) {
+
+}
+
+void playerlist_out_sent_handler(DictionaryIterator *sent) {
+
+}
+
+void playerlist_out_failed_handler(DictionaryIterator *failed, AppMessageResult reason) {
+
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - //

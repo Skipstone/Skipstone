@@ -1,7 +1,7 @@
 #include <pebble.h>
 #include "plex.h"
-#include "../libs/pebble-assist.h"
-#include "../common.h"
+#include "../../libs/pebble-assist.h"
+#include "../../common.h"
 
 static void send_request(char *request);
 static void back_single_click_handler(ClickRecognizerRef recognizer, void *context);
@@ -41,6 +41,15 @@ void plex_destroy(void) {
 }
 
 void plex_in_received_handler(DictionaryIterator *iter) {
+
+}
+
+void plex_out_sent_handler(DictionaryIterator *sent) {
+
+}
+
+void plex_out_failed_handler(DictionaryIterator *failed, AppMessageResult reason) {
+
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - //

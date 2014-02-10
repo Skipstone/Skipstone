@@ -3,9 +3,9 @@
 #include "common.h"
 #include "libs/pebble-assist.h"
 #include "windows/playerlist.h"
-#include "windows/plex.h"
-#include "windows/vlc.h"
-#include "windows/xbmc.h"
+#include "windows/plex/plex.h"
+#include "windows/vlc/vlc.h"
+#include "windows/xbmc/xbmc.h"
 
 static void in_received_handler(DictionaryIterator *iter, void *context);
 static void in_dropped_handler(AppMessageResult reason, void *context);
@@ -21,14 +21,11 @@ void appmessage_init(void) {
 }
 
 static void in_received_handler(DictionaryIterator *iter, void *context) {
-	Tuple *player_tuple = dict_find(iter, KEY_PLAYER);
-	Tuple *request_tuple = dict_find(iter, KEY_REQUEST);
-
-	if (request_tuple && player_tuple) {
+	if (dict_find(iter, KEY_LIST)) {
 		playerlist_in_received_handler(iter);
 		return;
 	}
-
+	Tuple *player_tuple = dict_find(iter, KEY_PLAYER);
 	if (player_tuple) {
 		switch (player_tuple->value->int16) {
 			case MediaPlayerPLEX:
@@ -49,9 +46,43 @@ static void in_dropped_handler(AppMessageResult reason, void *context) {
 }
 
 static void out_sent_handler(DictionaryIterator *sent, void *context) {
-	// outgoing message was delivered
+	if (dict_find(sent, KEY_LIST)) {
+		playerlist_out_sent_handler(sent);
+		return;
+	}
+	Tuple *player_tuple = dict_find(sent, KEY_PLAYER);
+	if (player_tuple) {
+		switch (player_tuple->value->int16) {
+			case MediaPlayerPLEX:
+				plex_out_sent_handler(sent);
+				break;
+			case MediaPlayerVLC:
+				vlc_out_sent_handler(sent);
+				break;
+			case MediaPlayerXBMC:
+				xbmc_out_sent_handler(sent);
+				break;
+		}
+	}
 }
 
 static void out_failed_handler(DictionaryIterator *failed, AppMessageResult reason, void *context) {
-	APP_LOG(APP_LOG_LEVEL_DEBUG, "Failed to send AppMessage to Pebble");
+	if (dict_find(failed, KEY_LIST)) {
+		playerlist_out_failed_handler(failed, reason);
+		return;
+	}
+	Tuple *player_tuple = dict_find(failed, KEY_PLAYER);
+	if (player_tuple) {
+		switch (player_tuple->value->int16) {
+			case MediaPlayerPLEX:
+				plex_out_failed_handler(failed, reason);
+				break;
+			case MediaPlayerVLC:
+				vlc_out_failed_handler(failed, reason);
+				break;
+			case MediaPlayerXBMC:
+				xbmc_out_failed_handler(failed, reason);
+				break;
+		}
+	}
 }

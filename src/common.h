@@ -15,6 +15,7 @@ typedef struct {
 } Player;
 
 enum {
+	KEY_LIST,
 	KEY_PLAYER,
 	KEY_REQUEST,
 	KEY_INDEX,

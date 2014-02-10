@@ -10,13 +10,14 @@
 		"watchface": false
 	},
 	"appKeys": {
-		"player": 0,
-		"request": 1,
-		"index": 2,
-		"title": 3,
-		"status": 4,
-		"volume": 5,
-		"seek": 6
+		"list": 0,
+		"player": 1,
+		"request": 2,
+		"index": 3,
+		"title": 4,
+		"status": 5,
+		"volume": 6,
+		"seek": 7
 	},
 	"resources": {
 		"media": [
