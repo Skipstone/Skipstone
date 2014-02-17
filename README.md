@@ -11,7 +11,33 @@ Skipstone is a fully featured universal media player remote watch app for the Pe
 
 ## Plex
 
-* Work in progress.
+_**Work in progress.**_
+
+### Features
+
+* List all clients connected to the Plex server and control any of them.
+* Toggle play/pause.
+* Press select, back, up, down, left, and right buttons.
+* Short and long step forward/backward.
+
+### Controls
+
+| Button                                               | Function                      |
+| ---------------------------------------------------- | ----------------------------- |
+| Long click select                                    | Switch between options 1/2    |
+| Double click select                                  | Back Button                   |
+|                                                      |                               |
+| Single click select <sub><sup>(option 1)</sup></sub> | Select Button                 |
+| Single click up <sub><sup>(option 1)</sup></sub>     | Up Button                     |
+| Single click down <sub><sup>(option 1)</sup></sub>   | Down Button                   |
+| Long click up <sub><sup>(option 1)</sup></sub>       | Right Button                  |
+| Long click down <sub><sup>(option 1)</sup></sub>     | Left Button                   |
+|                                                      |                               |
+| Single click select <sub><sup>(option 2)</sup></sub> | Toggle play/pause             |
+| Single click up <sub><sup>(option 2)</sup></sub>     | Short Forwords (+30 seconds)  |
+| Single click down <sub><sup>(option 2)</sup></sub>   | Short Backwords (-30 seconds) |
+| Long click up <sub><sup>(option 2)</sup></sub>       | Long Forwords (+10 minutes)   |
+| Long click down <sub><sup>(option 2)</sup></sub>     | Long Backwords (-10 minutes)  |
 
 ## VLC
 

@@ -122,6 +122,10 @@ static void down_long_click_handler(ClickRecognizerRef recognizer, void *context
 	send_request(controlling_keypad ? "left" : "backword_long");
 }
 
+static void select_double_click_handler(ClickRecognizerRef recognizer, void *context) {
+	send_request("back");
+}
+
 static void select_long_click_handler(ClickRecognizerRef recognizer, void *context) {
 	controlling_keypad = !controlling_keypad;
 	display_action_bar_icons();
@@ -135,6 +139,7 @@ static void click_config_provider(void *context) {
 	window_long_click_subscribe(BUTTON_ID_UP, 700, up_long_click_handler, NULL);
 	window_long_click_subscribe(BUTTON_ID_DOWN, 700, down_long_click_handler, NULL);
 	window_long_click_subscribe(BUTTON_ID_SELECT, 500, select_long_click_handler, NULL);
+	window_multi_click_subscribe(BUTTON_ID_SELECT, 2, 0, 0, false, select_double_click_handler);
 }
 
 static void window_load(Window *window) {
