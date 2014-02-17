@@ -17,7 +17,8 @@
 		"title": 4,
 		"status": 5,
 		"volume": 6,
-		"seek": 7
+		"seek": 7,
+		"client": 8
 	},
 	"resources": {
 		"media": [
@@ -29,6 +30,11 @@
 			},
 			{
 				"type": "png",
+				"name": "IMAGE_PLEX_LOGO",
+				"file": "images/plex_logo.png"
+			},
+			{
+				"type": "png",
 				"name": "ICON_VOLUME_UP",
 				"file": "images/volume_up.png"
 			},
@@ -36,6 +42,11 @@
 				"type": "png",
 				"name": "ICON_VOLUME_DOWN",
 				"file": "images/volume_down.png"
+			},
+			{
+				"type": "png",
+				"name": "ICON_PLAY_PAUSE",
+				"file": "images/play_pause.png"
 			},
 			{
 				"type": "png",
