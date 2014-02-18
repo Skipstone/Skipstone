@@ -8,7 +8,7 @@ var Plex = {
 		xhr.setRequestHeader('Accept', 'application/json');
 		xhr.onload = function() {
 			if (xhr.readyState == 4 && xhr.status == 200) {
-				cb(JSON.parse(xhr.responseText));
+				cb(xhr);
 			} else {
 				fb(xhr);
 			}
@@ -31,11 +31,12 @@ var Plex = {
 		Plex.makeRequest(player, '/clients', function(e) {
 			Plex.clients = [];
 			appMessageQueue.clear();
-			if (e._children) {
+			var res = JSON.parse(e.responseText);
+			if (res._children) {
 				var i = 0;
-				for (var c in e._children) {
-					var name = e._children[c].name.replace(/[^\w\s]/gi, '') || '';
-					var host = e._children[c].host || '';
+				for (var c in res._children) {
+					var name = res._children[c].name.replace(/[^\w\s]/gi, '') || '';
+					var host = res._children[c].host || '';
 					Plex.clients.push({name:name, host:host});
 					appMessageQueue.add({player:mediaPlayer.PLEX, index:i++, title:name, status:host});
 				}
