@@ -54,6 +54,7 @@ void plexstatus_init(Player p, Player c) {
 }
 
 void plexstatus_destroy(void) {
+	persist_write_bool(KEY_PLEX_CONTROLLING_KEYPAD, controlling_keypad);
 	window_destroy_safe(window);
 }
 
