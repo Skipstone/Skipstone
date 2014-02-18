@@ -11,8 +11,6 @@ Skipstone is a fully featured universal media player remote watch app for the Pe
 
 ## Plex
 
-_**Work in progress.**_
-
 ### Features
 
 * List all clients connected to the Plex server and control any of them.
