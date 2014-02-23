@@ -1,6 +1,6 @@
 # Skipstone
 
-Skipstone is a fully featured universal media player remote watch app for the Pebble Smartwatch to control media players such as Plex, VLC, and XBMC.
+Skipstone is a fully featured universal media player remote watch app for the Pebble Smartwatch to control media players such as Plex, VLC, XBMC, and WDTV.
 
 ### Table of Contents
 * [Plex](#plex)
