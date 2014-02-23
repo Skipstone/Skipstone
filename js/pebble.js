@@ -3,7 +3,8 @@ var players = JSON.parse(localStorage.getItem('players')) || [];
 var mediaPlayer = {
 	PLEX: 0,
 	VLC: 1,
-	XBMC: 2
+	XBMC: 2,
+	WDTV: 3
 };
 
 function sendPlayerList() {
@@ -42,6 +43,9 @@ Pebble.addEventListener('appmessage', function(e) {
 			break;
 		case mediaPlayer.XBMC:
 			XBMC.handleIncomingAppMessage(e.payload);
+			break;
+		case mediaPlayer.WDTV:
+			WDTV.handleIncomingAppMessage(e.payload);
 			break;
 	}
 });

@@ -6,6 +6,7 @@ Skipstone is a fully featured universal media player remote watch app for the Pe
 * [Plex](#plex)
 * [VLC](#vlc)
 * [XBMC](#xbmc)
+* [WDTV](#wdtv)
 * [Release Notes](#release-notes)
 * [License](#license)
 
@@ -104,7 +105,44 @@ Skipstone is a fully featured universal media player remote watch app for the Pe
 | Long click up <sub><sup>(option 3)</sup></sub>       | Set volume to 100%            |
 | Long click down <sub><sup>(option 3)</sup></sub>     | Set volume to 0%              |
 
+## WDTV
+
+### Controls
+
+| Button                                               | Function                       |
+| ---------------------------------------------------- | ------------------------------ |
+| Double click select                                  | Switch between options 1/2/3/4 |
+|                                                      |                                |
+| Single click up <sub><sup>(option 1)</sup></sub>     | Rewind                         |
+| Long click up <sub><sup>(option 1)</sup></sub>       | Previous                       |
+| Single click select <sub><sup>(option 1)</sup></sub> | Play/Pause                     |
+| Long click select <sub><sup>(option 1)</sup></sub>   | Stop                           |
+| Single click down <sub><sup>(option 1)</sup></sub>   | Forward                        |
+| Long click down <sub><sup>(option 1)</sup></sub>     | Next                           |
+|                                                      |                                |
+| Single click up <sub><sup>(option 2)</sup></sub>     | Up                             |
+| Long click up <sub><sup>(option 2)</sup></sub>       | Left                           |
+| Single click select <sub><sup>(option 2)</sup></sub> | OK                             |
+| Long click select <sub><sup>(option 2)</sup></sub>   | Back                           |
+| Single click down <sub><sup>(option 2)</sup></sub>   | Down                           |
+| Long click down <sub><sup>(option 2)</sup></sub>     | Right                          |
+|                                                      |                                |
+| Single click up <sub><sup>(option 3)</sup></sub>     | Back                           |
+| Long click up <sub><sup>(option 3)</sup></sub>       | Mute                           |
+| Single click select <sub><sup>(option 3)</sup></sub> | Home                           |
+| Long click select <sub><sup>(option 3)</sup></sub>   | Option                         |
+| Single click down <sub><sup>(option 3)</sup></sub>   | Setup                          |
+| Long click down <sub><sup>(option 3)</sup></sub>     | Power                          |
+
 ## Release Notes
+
+#### v1.1.1
+
+* Add WDTV support.
+
+#### v1.1
+
+* Add Plex support.
 
 #### v1.0.1
 

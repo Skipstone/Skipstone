@@ -35,6 +35,11 @@
 			},
 			{
 				"type": "png",
+				"name": "IMAGE_WDTV",
+				"file": "images/wdtv.png"
+			},
+			{
+				"type": "png",
 				"name": "ICON_VOLUME_UP",
 				"file": "images/volume_up.png"
 			},
@@ -82,6 +87,21 @@
 				"type": "png",
 				"name": "ICON_SELECT",
 				"file": "images/select.png"
+			},
+			{
+				"type": "png",
+				"name": "ICON_HOME",
+				"file": "images/home.png"
+			},
+			{
+				"type": "png",
+				"name": "ICON_BACK",
+				"file": "images/back.png"
+			},
+			{
+				"type": "png",
+				"name": "ICON_SETTINGS",
+				"file": "images/settings.png"
 			}
 		]
 	}

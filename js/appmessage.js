@@ -29,6 +29,7 @@ var appMessageQueue = {
 				console.log('Failed sending AppMessage: ' + JSON.stringify(this.nextMessage()));
 				ack();
 			}
+			console.log('Sending AppMessage: ' + JSON.stringify(this.nextMessage()));
 			Pebble.sendAppMessage(this.nextMessage(), ack, nack);
 		}
 	}

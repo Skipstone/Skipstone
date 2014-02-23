@@ -6,6 +6,7 @@
 #include "windows/plex/plex.h"
 #include "windows/vlc/vlc.h"
 #include "windows/xbmc/xbmc.h"
+#include "windows/wdtv/wdtv.h"
 
 static void in_received_handler(DictionaryIterator *iter, void *context);
 static void in_dropped_handler(AppMessageResult reason, void *context);
@@ -37,6 +38,9 @@ static void in_received_handler(DictionaryIterator *iter, void *context) {
 			case MediaPlayerXBMC:
 				xbmc_in_received_handler(iter);
 				break;
+			case MediaPlayerWDTV:
+				wdtv_in_received_handler(iter);
+				break;
 		}
 	}
 }
@@ -62,6 +66,9 @@ static void out_sent_handler(DictionaryIterator *sent, void *context) {
 			case MediaPlayerXBMC:
 				xbmc_out_sent_handler(sent);
 				break;
+			case MediaPlayerWDTV:
+				wdtv_out_sent_handler(sent);
+				break;
 		}
 	}
 }
@@ -82,6 +89,9 @@ static void out_failed_handler(DictionaryIterator *failed, AppMessageResult reas
 				break;
 			case MediaPlayerXBMC:
 				xbmc_out_failed_handler(failed, reason);
+				break;
+			case MediaPlayerWDTV:
+				wdtv_out_failed_handler(failed, reason);
 				break;
 		}
 	}
