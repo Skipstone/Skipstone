@@ -8,9 +8,8 @@ $(document).bind('pageinit', function() {
 		try {
 			var d = JSON.parse(atob(decodeURIComponent(data[1])));
 			players = d.players;
-			if(d.version != version) $('.update-alert').show();
 		} catch(err) {
-			
+
 		}
 	}
 
@@ -48,6 +47,10 @@ $(document).bind('pageinit', function() {
 
 	$('.btn-add-xbmc').on('click', function() {
 		addNewPanel('New XBMC Remote', $('.panel-template-2').first().clone());
+	});
+
+	$('.btn-add-wdtv').on('click', function() {
+		addNewPanel('New WDTV Remote', $('.panel-template-3').first().clone());
 	});
 
 	$('.btn-save').on('click', function() {

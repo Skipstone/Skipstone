@@ -20,6 +20,7 @@
 				<button type='button' class='btn btn-danger btn-add-player btn-add-plex'>Plex</button>
 				<button type='button' class='btn btn-warning btn-add-player btn-add-vlc'>VLC</button>
 				<button type='button' class='btn btn-success btn-add-player btn-add-xbmc'>XBMC</button>
+				<button type='button' class='btn btn-info btn-add-player btn-add-wdtv'>WDTV</button>
 			</div>
 
 			<h4>Media Players</h4>
@@ -110,7 +111,32 @@
 							</div>
 						</div>
 					</div>
-				</div> <!-- /panel-template-xbmc -->
+				</div> <!-- /panel-template-wdtv -->
+				<div class='panel panel-default panel-info panel-template panel-template-3'>
+					<div class='panel-heading'>
+						<i class='handle fa fa-bars'></i>
+						<span class='panel-title'></span>
+						<a class='accordion-toggle' data-toggle='collapse' data-parent='#accordion' href='#panel_wdtv_template'></a>
+						<span class='btn btn-danger btn-delete'><i class='fa fa-trash-o fa-lg'></i></span>
+					</div>
+					<div id='panel_wdtv_template' class='panel-collapse collapse in'>
+						<div class='panel-body'>
+							<input type='hidden' id='player' value='3' />
+							<div class='form-group'>
+								<label for='title'>Title</label>
+								<input type='text' class='form-control' id='title' maxlength='20' placeholder='Living Room' />
+							</div>
+							<div class='form-group'>
+								<label for='subtitle'>Subtitle</label>
+								<input type='text' class='form-control' id='subtitle' maxlength='15' placeholder='192.168.1.11' />
+							</div>
+							<div class='form-group'>
+								<label for='server'>Server</label>
+								<input type='text' class='form-control' id='server' autocorrect='off' autocapitalize='off' placeholder='192.168.1.11' />
+							</div>
+						</div>
+					</div>
+				</div> <!-- /panel-template-wdtv -->
 			</div> <!-- /panel-container -->
 
 			<button type='submit' class='btn btn-primary btn-block btn-lg btn-save'>Save</button>
