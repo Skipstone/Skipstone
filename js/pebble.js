@@ -4,7 +4,8 @@ var mediaPlayer = {
 	PLEX: 0,
 	VLC: 1,
 	XBMC: 2,
-	WDTV: 3
+	WDTV: 3,
+	ATV: 4
 };
 
 function sendPlayerList() {
@@ -46,6 +47,9 @@ Pebble.addEventListener('appmessage', function(e) {
 			break;
 		case mediaPlayer.WDTV:
 			WDTV.handleIncomingAppMessage(e.payload);
+			break;
+		case mediaPlayer.ATV:
+			ATV.handleIncomingAppMessage(e.payload);
 			break;
 	}
 });

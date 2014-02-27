@@ -7,6 +7,7 @@
 #include "windows/vlc/vlc.h"
 #include "windows/xbmc/xbmc.h"
 #include "windows/wdtv/wdtv.h"
+#include "windows/atv/atv.h"
 
 static void in_received_handler(DictionaryIterator *iter, void *context);
 static void in_dropped_handler(AppMessageResult reason, void *context);
@@ -41,6 +42,9 @@ static void in_received_handler(DictionaryIterator *iter, void *context) {
 			case MediaPlayerWDTV:
 				wdtv_in_received_handler(iter);
 				break;
+			case MediaPlayerATV:
+				atv_in_received_handler(iter);
+				break;
 		}
 	}
 }
@@ -69,6 +73,9 @@ static void out_sent_handler(DictionaryIterator *sent, void *context) {
 			case MediaPlayerWDTV:
 				wdtv_out_sent_handler(sent);
 				break;
+			case MediaPlayerATV:
+				atv_out_sent_handler(sent);
+				break;
 		}
 	}
 }
@@ -92,6 +99,9 @@ static void out_failed_handler(DictionaryIterator *failed, AppMessageResult reas
 				break;
 			case MediaPlayerWDTV:
 				wdtv_out_failed_handler(failed, reason);
+				break;
+			case MediaPlayerATV:
+				atv_out_failed_handler(failed, reason);
 				break;
 		}
 	}

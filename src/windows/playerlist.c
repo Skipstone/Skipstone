@@ -6,6 +6,7 @@
 #include "vlc/vlc.h"
 #include "xbmc/xbmc.h"
 #include "wdtv/wdtv.h"
+#include "atv/atv.h"
 
 #define MAX_PLAYERS 20
 
@@ -53,6 +54,7 @@ void playerlist_destroy(void) {
 	vlc_destroy();
 	xbmc_destroy();
 	wdtv_destroy();
+	atv_destroy();
 	layer_remove_from_parent(menu_layer_get_layer(menu_layer));
 	menu_layer_destroy_safe(menu_layer);
 	window_destroy_safe(window);
@@ -101,6 +103,8 @@ const char* player_to_str(MediaPlayer player) {
 			return "XBMC";
 		case MediaPlayerWDTV:
 			return "WDTV";
+		case MediaPlayerATV:
+			return "ATV";
 		case MediaPlayerNONE:
 		default:
 			return "";
@@ -167,6 +171,9 @@ static void menu_select_callback(struct MenuLayer *menu_layer, MenuIndex *cell_i
 			break;
 		case MediaPlayerWDTV:
 			wdtv_init(players[cell_index->row]);
+			break;
+		case MediaPlayerATV:
+			atv_init(players[cell_index->row]);
 			break;
 		case MediaPlayerNONE:
 			break;
