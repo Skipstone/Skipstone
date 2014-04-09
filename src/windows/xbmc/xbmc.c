@@ -14,6 +14,7 @@ static void up_long_click_handler(ClickRecognizerRef recognizer, void *context);
 static void down_long_click_handler(ClickRecognizerRef recognizer, void *context);
 static void select_long_click_handler(ClickRecognizerRef recognizer, void *context);
 static void click_config_provider(void *context);
+static void handle_update_timer(void *data);
 static void window_load(Window *window);
 static void window_unload(Window *window);
 
@@ -239,7 +240,7 @@ static void click_config_provider(void *context) {
 }
 
 static void handle_update_timer(void *data) {
-	send_request("update");
+	send_request("refresh");
 	update_timer = app_timer_register(5000, handle_update_timer, NULL);
 }
 
@@ -336,6 +337,6 @@ static void window_unload(Window *window) {
 	text_layer_destroy(volume_layer);
 	progress_bar_layer_destroy(volume_bar);
 	progress_bar_layer_destroy(seek_bar);
-	
+
 	app_timer_cancel(update_timer);
 }

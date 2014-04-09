@@ -169,9 +169,6 @@ var XBMC = {
 				requestObj.params.playerid = 1;
 				requestObj.params.value = 'bigbackward';
 				break;
-			case 'update':
-				XBMC.requestUpdates(player);
-				break;
 			default:
 				XBMC.requestUpdates(player);
 				return;

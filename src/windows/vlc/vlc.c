@@ -13,11 +13,13 @@ static void up_long_click_handler(ClickRecognizerRef recognizer, void *context);
 static void down_long_click_handler(ClickRecognizerRef recognizer, void *context);
 static void select_long_click_handler(ClickRecognizerRef recognizer, void *context);
 static void click_config_provider(void *context);
+static void handle_update_timer(void *data);
 static void window_load(Window *window);
 static void window_unload(Window *window);
 
 static Window *window;
 
+static AppTimer *update_timer;
 static ActionBarLayer *action_bar;
 
 static GBitmap *action_icon_volume_up;
@@ -154,6 +156,11 @@ static void click_config_provider(void *context) {
 	window_long_click_subscribe(BUTTON_ID_SELECT, 500, select_long_click_handler, NULL);
 }
 
+static void handle_update_timer(void *data) {
+	send_request("refresh");
+	update_timer = app_timer_register(5000, handle_update_timer, NULL);
+}
+
 static void window_load(Window *window) {
 	action_icon_volume_up = gbitmap_create_with_resource(RESOURCE_ID_ICON_VOLUME_UP);
 	action_icon_volume_down = gbitmap_create_with_resource(RESOURCE_ID_ICON_VOLUME_DOWN);
@@ -222,6 +229,8 @@ static void window_load(Window *window) {
 	layer_add_child(window_layer, text_layer_get_layer(volume_layer));
 	layer_add_child(window_layer, volume_bar);
 	layer_add_child(window_layer, seek_bar);
+
+	update_timer = app_timer_register(5000, handle_update_timer, NULL);
 }
 
 static void window_unload(Window *window) {
@@ -239,4 +248,6 @@ static void window_unload(Window *window) {
 	text_layer_destroy(volume_layer);
 	progress_bar_layer_destroy(volume_bar);
 	progress_bar_layer_destroy(seek_bar);
+
+	app_timer_cancel(update_timer);
 }
