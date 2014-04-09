@@ -19,6 +19,7 @@ static void window_unload(Window *window);
 
 static Window *window;
 
+static AppTimer *update_timer;
 static ActionBarLayer *action_bar;
 
 static GBitmap *action_icon_volume_up;
@@ -237,6 +238,11 @@ static void click_config_provider(void *context) {
 	window_multi_click_subscribe(BUTTON_ID_SELECT, 2, 0, 0, false, select_double_click_handler);
 }
 
+static void handle_update_timer(void *data) {
+	send_request("update");
+	update_timer = app_timer_register(5000, handle_update_timer, NULL);
+}
+
 static void window_load(Window *window) {
 	controlling_type = persist_exists(KEY_XBMC_CONTROLLING_TYPE) ? persist_read_int(KEY_XBMC_CONTROLLING_TYPE) : CONTROLLING_TYPE_KEYPAD;
 
@@ -308,6 +314,8 @@ static void window_load(Window *window) {
 	layer_add_child(window_layer, text_layer_get_layer(volume_layer));
 	layer_add_child(window_layer, volume_bar);
 	layer_add_child(window_layer, seek_bar);
+
+	update_timer = app_timer_register(5000, handle_update_timer, NULL);
 }
 
 static void window_unload(Window *window) {
@@ -328,4 +336,6 @@ static void window_unload(Window *window) {
 	text_layer_destroy(volume_layer);
 	progress_bar_layer_destroy(volume_bar);
 	progress_bar_layer_destroy(seek_bar);
+	
+	app_timer_cancel(update_timer);
 }
