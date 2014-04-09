@@ -136,6 +136,10 @@ Skipstone is a fully featured universal media player remote watch app for the Pe
 
 ## Release Notes
 
+#### v1.1.2
+
+* Make XBMC and VLC refresh status every 5 seconds.
+
 #### v1.1.1
 
 * Add WDTV support.
