@@ -33,10 +33,10 @@ Skipstone is a fully featured universal media player remote watch app for the Pe
 | Long click down <sub><sup>(option 1)</sup></sub>     | Left Button                   |
 |                                                      |                               |
 | Single click select <sub><sup>(option 2)</sup></sub> | Toggle play/pause             |
-| Single click up <sub><sup>(option 2)</sup></sub>     | Short Forwords (+30 seconds)  |
-| Single click down <sub><sup>(option 2)</sup></sub>   | Short Backwords (-30 seconds) |
-| Long click up <sub><sup>(option 2)</sup></sub>       | Long Forwords (+10 minutes)   |
-| Long click down <sub><sup>(option 2)</sup></sub>     | Long Backwords (-10 minutes)  |
+| Single click up <sub><sup>(option 2)</sup></sub>     | Short Forwards (+30 seconds)  |
+| Single click down <sub><sup>(option 2)</sup></sub>   | Short Backwards (-30 seconds) |
+| Long click up <sub><sup>(option 2)</sup></sub>       | Long Forwards (+10 minutes)   |
+| Long click down <sub><sup>(option 2)</sup></sub>     | Long Backwards (-10 minutes)  |
 
 ## VLC
 
@@ -94,10 +94,10 @@ Skipstone is a fully featured universal media player remote watch app for the Pe
 | Long click down <sub><sup>(option 1)</sup></sub>     | Right Button                  |
 |                                                      |                               |
 | Single click select <sub><sup>(option 2)</sup></sub> | Toggle play/pause             |
-| Single click up <sub><sup>(option 2)</sup></sub>     | Short Backwords (-30 seconds) |
-| Single click down <sub><sup>(option 2)</sup></sub>   | Short Forwords (+30 seconds)  |
-| Long click up <sub><sup>(option 2)</sup></sub>       | Long Backwords (-10 minutes)  |
-| Long click down <sub><sup>(option 2)</sup></sub>     | Long Forwords (+10 minutes)   |
+| Single click up <sub><sup>(option 2)</sup></sub>     | Short Backwards (-30 seconds) |
+| Single click down <sub><sup>(option 2)</sup></sub>   | Short Forwards (+30 seconds)  |
+| Long click up <sub><sup>(option 2)</sup></sub>       | Long Backwards (-10 minutes)  |
+| Long click down <sub><sup>(option 2)</sup></sub>     | Long Forwards (+10 minutes)   |
 |                                                      |                               |
 | Single click select <sub><sup>(option 3)</sup></sub> | Toggle play/pause             |
 | Single click up <sub><sup>(option 3)</sup></sub>     | Increment volume              |
