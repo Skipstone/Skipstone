@@ -4,21 +4,22 @@
 	"longName": "Skipstone",
 	"companyName": "Skipstone",
 	"versionCode": 1,
-	"versionLabel": "1.1.2",
+	"versionLabel": "2.0",
 	"capabilities": [ "configurable" ],
 	"watchapp": {
 		"watchface": false
 	},
 	"appKeys": {
-		"list": 0,
-		"player": 1,
+		"type": 0,
+		"method": 1,
 		"request": 2,
 		"index": 3,
 		"title": 4,
-		"status": 5,
-		"volume": 6,
-		"seek": 7,
-		"client": 8
+		"subtitle": 5,
+		"status": 6,
+		"volume": 7,
+		"seek": 8,
+		"player": 9
 	},
 	"resources": {
 		"media": [
