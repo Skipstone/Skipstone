@@ -1,4 +1,6 @@
 var XBMC = {
+	playerid: 1,
+
 	makeRequest: function(player, data, requestUpdates) {
 		var url = 'http://' + player.server + '/jsonrpc';
 		var headers = { 'Content-type': 'application/json', 'Authorization': 'Basic ' + base64_encode(player.username + ':' + player.password) };
@@ -9,6 +11,9 @@ var XBMC = {
 					XBMC.sendData(r);
 				});
 			} else if (res instanceof Object) {
+				if (res.result && res.result instanceof Array) {
+					if (isset(res.result[0].playerid)) XBMC.playerid = res.result[0].playerid;
+				}
 				XBMC.sendData(res);
 			}
 			if (requestUpdates) XBMC.requestUpdates(player);
@@ -43,8 +48,8 @@ var XBMC = {
 	requestUpdates: function(player) {
 		var data = [
 			{ jsonrpc:'2.0', id:1, method:'Application.GetProperties', params:{properties:['volume']} },
-			{ jsonrpc:'2.0', id:1, method:'Player.GetItem', params:{playerid:1, properties:['title']} },
-			{ jsonrpc:'2.0', id:1, method:'Player.GetProperties', params:{playerid:1, properties:['percentage','speed']} }
+			{ jsonrpc:'2.0', id:1, method:'Player.GetItem', params:{playerid:XBMC.playerid, properties:['title']} },
+			{ jsonrpc:'2.0', id:1, method:'Player.GetProperties', params:{playerid:XBMC.playerid, properties:['percentage','speed']} }
 		];
 		XBMC.makeRequest(player, data);
 	},
@@ -80,7 +85,7 @@ var XBMC = {
 				break;
 			case REQUEST.PLAY_PAUSE:
 				data.method = 'Player.PlayPause';
-				data.params.playerid = 1;
+				data.params.playerid = XBMC.playerid;
 				break;
 			case REQUEST.VOLUME_INCREMENT:
 				data.method = 'Application.SetVolume';
@@ -100,26 +105,27 @@ var XBMC = {
 				break;
 			case REQUEST.FORWARD_SHORT:
 				data.method = 'Player.Seek';
-				data.params.playerid = 1;
+				data.params.playerid = XBMC.playerid;
 				data.params.value = 'smallforward';
 				break;
 			case REQUEST.BACKWARD_SHORT:
 				data.method = 'Player.Seek';
-				data.params.playerid = 1;
+				data.params.playerid = XBMC.playerid;
 				data.params.value = 'smallbackward';
 				break;
 			case REQUEST.FORWARD_LONG:
 				data.method = 'Player.Seek';
-				data.params.playerid = 1;
+				data.params.playerid = XBMC.playerid;
 				data.params.value = 'bigforward';
 				break;
 			case REQUEST.BACKWORD_LONG:
 				data.method = 'Player.Seek';
-				data.params.playerid = 1;
+				data.params.playerid = XBMC.playerid;
 				data.params.value = 'bigbackward';
 				break;
 			case REQUEST.REFRESH:
-				return XBMC.requestUpdates(player);
+				data.method = 'Player.GetActivePlayers';
+				break;
 			default:
 				return;
 		}
