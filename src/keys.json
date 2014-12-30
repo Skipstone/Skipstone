@@ -1,0 +1,62 @@
+{
+	"TYPE": [
+		"ERROR",
+		"PLAYERS",
+		"PLEX",
+		"VLC",
+		"XBMC",
+		"WDTV"
+	],
+	"METHOD": [
+		"ERROR",
+		"SIZE",
+		"DATA",
+		"STATUS",
+		"PLEX",
+		"VLC",
+		"XBMC",
+		"WDTV",
+		"REQUESTPLAYERS",
+		"READY"
+	],
+	"REQUEST": [
+		"ERROR",
+
+		"PLAY_PAUSE",
+		"VOLUME_INCREMENT",
+		"VOLUME_DECREMENT",
+		"VOLUME_MIN",
+		"VOLUME_MAX",
+		"FORWARD_SHORT",
+		"FORWARD_LONG",
+		"BACKWARD_SHORT",
+		"BACKWARD_LONG",
+		"UP",
+		"DOWN",
+		"RIGHT",
+		"LEFT",
+		"SELECT",
+		"BACK",
+		"OK",
+		"MUTE",
+		"HOME",
+		"SETUP",
+		"POWER",
+		"OPTION",
+		"STOP",
+		"NEXT",
+		"PREV",
+		"FORWARD",
+		"REWIND",
+
+		"CLIENTS",
+		"REFRESH"
+	],
+	"PERSIST": [
+		"LAST_USED_PLAYER",
+		"PLEX_CONTROLLING_TYPE",
+		"VLC_CONTROLLING_TYPE",
+		"XBMC_CONTROLLING_TYPE",
+		"WDTV_CONTROLLING_TYPE"
+	]
+}
