@@ -14,8 +14,10 @@ var Plex = {
 
 	requestStatus: function(player, client) {
 		var url = 'http://' + player.server + '/status/sessions';
+		var params = {};
+		if (player.token) params['X-Plex-Token'] = player.token;
 		var headers = { 'Accept': 'application/json' };
-		http('GET', url, null, headers, function(e) {
+		http('GET', url, params, headers, function(e) {
 			if (e.status >= 300) {
 				return;
 			}
@@ -48,8 +50,10 @@ var Plex = {
 
 	requestClients: function(player) {
 		var url = 'http://' + player.server + '/clients';
+		var params = {};
+		if (player.token) params['X-Plex-Token'] = player.token;
 		var headers = { 'Accept': 'application/json' };
-		http('GET', url, null, headers, function(e) {
+		http('GET', url, params, headers, function(e) {
 			var res = JSON.parse(e.responseText);
 			Plex.clients = res._children || [];
 			Plex.sendClients();
