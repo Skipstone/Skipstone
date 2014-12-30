@@ -4,8 +4,10 @@ var Plex = {
 
 	sendControlCommand: function(player, client, controller, command) {
 		var url = 'http://' + player.server + '/system/players/' + client.host + '/' + controller + '/' + command;
+		var params = {};
+		if (player.token) params['X-Plex-Token'] = player.token;
 		var headers = { 'Accept': 'application/json' };
-		http('GET', url, null, headers, function(e) {
+		http('GET', url, params, headers, function(e) {
 			Plex.requestStatus(player, client);
 		});
 	},
