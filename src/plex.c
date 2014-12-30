@@ -58,6 +58,7 @@ void plex_in_received_handler(DictionaryIterator *iter) {
 			break;
 		}
 		case KEY_METHOD_STATUS: {
+			if (!win_plexstatus_is_loaded()) break;
 			tuple = dict_find(iter, APP_KEY_TITLE);
 			if (tuple) win_plexstatus_set_title(tuple->value->cstring);
 			tuple = dict_find(iter, APP_KEY_SUBTITLE);
@@ -89,8 +90,7 @@ void plex_request(uint8_t request) {
 }
 
 char* plex_get_error() {
-	if (error == NULL && !plex_clients_count()) return "Loading clients...";
-	return &error[0];
+	return (error == NULL && !plex_clients_count()) ? "Loading clients..." : error;
 }
 
 uint8_t plex_clients_count() {
@@ -98,9 +98,7 @@ uint8_t plex_clients_count() {
 }
 
 PlexClient* plex_client_get(uint8_t index) {
-	if (index < plex_clients_count())
-		return &clients[index];
-	return NULL;
+	return (index < plex_clients_count()) ? &clients[index] : NULL;
 }
 
 PlexClient* plex_client_get_current() {

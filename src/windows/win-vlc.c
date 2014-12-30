@@ -68,6 +68,10 @@ void win_vlc_deinit(void) {
 	window_destroy_safe(window);
 }
 
+bool win_vlc_is_loaded(void) {
+	return window_is_loaded(window);
+}
+
 void win_vlc_reload_data_and_mark_dirty(void) {
 	if (!window_is_loaded(window)) return;
 	update_action_bar_icons();

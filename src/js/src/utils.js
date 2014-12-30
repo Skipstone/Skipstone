@@ -1,5 +1,5 @@
 function isset(i) {
-	return (typeof i != 'undefined');
+	return (typeof i !== 'undefined');
 }
 
 function serialize(obj) {

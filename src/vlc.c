@@ -16,6 +16,8 @@ void vlc_deinit(void) {
 }
 
 void vlc_in_received_handler(DictionaryIterator *iter) {
+	if (!win_vlc_is_loaded()) return;
+
 	Tuple *tuple;
 
 	tuple = dict_find(iter, APP_KEY_TITLE);

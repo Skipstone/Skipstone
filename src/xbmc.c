@@ -16,6 +16,8 @@ void xbmc_deinit(void) {
 }
 
 void xbmc_in_received_handler(DictionaryIterator *iter) {
+	if (!win_xbmc_is_loaded()) return;
+
 	Tuple *tuple;
 
 	tuple = dict_find(iter, APP_KEY_TITLE);

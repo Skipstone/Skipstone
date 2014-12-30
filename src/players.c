@@ -80,14 +80,11 @@ void players_count_set(uint8_t count) {
 }
 
 char* players_get_error() {
-	if (error == NULL && !players_count()) return "Loading...";
-	return &error[0];
+	return (error == NULL && !players_count()) ? "Loading..." : error;
 }
 
 Player* players_get(uint8_t index) {
-	if (index < players_count())
-		return &players[index];
-	return NULL;
+	return (index < players_count()) ? &players[index] : NULL;
 }
 
 Player* players_get_current() {
