@@ -4,7 +4,7 @@
 	"longName": "Skipstone",
 	"companyName": "Skipstone",
 	"versionCode": 1,
-	"versionLabel": "2.1",
+	"versionLabel": "2.2",
 	"capabilities": [ "configurable" ],
 	"watchapp": {
 		"watchface": false

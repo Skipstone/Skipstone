@@ -161,7 +161,7 @@ static void select_long_click_handler(ClickRecognizerRef recognizer, void *conte
 }
 
 static void select_double_click_handler(ClickRecognizerRef recognizer, void *context) {
-	plex_request(KEY_REQUEST_REFRESH);
+	plex_request(KEY_REQUEST_BACK);
 }
 
 static void click_config_provider(void *context) {
