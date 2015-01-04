@@ -98,8 +98,11 @@ static void menu_draw_row_callback(GContext *ctx, const Layer *cell_layer, MenuI
 		graphics_draw_text(ctx, players_get_error(), fonts_get_system_font(FONT_KEY_GOTHIC_18_BOLD), GRect(4, 2, 136, 128), GTextOverflowModeFill, GTextAlignmentLeft, NULL);
 	} else {
 		Player *player = players_get(cell_index->row);
-		graphics_draw_text(ctx, player->title, fonts_get_system_font(FONT_KEY_GOTHIC_18_BOLD), GRect(4, 2, 136, 22), GTextOverflowModeTrailingEllipsis, GTextAlignmentLeft, NULL);
-		graphics_draw_text(ctx, player_to_str(player->mediaplayer), fonts_get_system_font(FONT_KEY_GOTHIC_18), GRect(4, 2, 136, 22), GTextOverflowModeTrailingEllipsis, GTextAlignmentRight, NULL);
+		
+		GSize mediaSize = graphics_text_layout_get_content_size(player_to_str(player->mediaplayer), fonts_get_system_font(FONT_KEY_GOTHIC_18), GRect(4, 2, 136, 22), GTextOverflowModeTrailingEllipsis, GTextAlignmentRight);
+		graphics_draw_text(ctx, player_to_str(player->mediaplayer), fonts_get_system_font(FONT_KEY_GOTHIC_18), GRect(144 - mediaSize.w - 4, 2, mediaSize.w, 22), GTextOverflowModeTrailingEllipsis, GTextAlignmentRight, NULL);
+		
+		graphics_draw_text(ctx, player->title, fonts_get_system_font(FONT_KEY_GOTHIC_18_BOLD), GRect(4, 2, 134 - mediaSize.w, 22), GTextOverflowModeTrailingEllipsis, GTextAlignmentLeft, NULL);
 	}
 }
 
