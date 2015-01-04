@@ -93,7 +93,7 @@ var Plex = {
 				controller = 'playback';
 				command = 'stepForward';
 				break;
-			case REQUEST.BACKWORD_SHORT:
+			case REQUEST.BACKWARD_SHORT:
 				controller = 'playback';
 				command = 'stepBack';
 				break;
@@ -101,7 +101,7 @@ var Plex = {
 				controller = 'playback';
 				command = 'bigStepForward';
 				break;
-			case REQUEST.BACKWORD_LONG:
+			case REQUEST.BACKWARD_LONG:
 				controller = 'playback';
 				command = 'bigStepBack';
 				break;

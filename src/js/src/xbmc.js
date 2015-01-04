@@ -118,7 +118,7 @@ var XBMC = {
 				data.params.playerid = XBMC.playerid;
 				data.params.value = 'bigforward';
 				break;
-			case REQUEST.BACKWORD_LONG:
+			case REQUEST.BACKWARD_LONG:
 				data.method = 'Player.Seek';
 				data.params.playerid = XBMC.playerid;
 				data.params.value = 'bigbackward';
