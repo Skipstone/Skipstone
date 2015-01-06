@@ -123,6 +123,16 @@ var XBMC = {
 				data.params.playerid = XBMC.playerid;
 				data.params.value = 'bigbackward';
 				break;
+			case REQUEST.NEXT:
+				data.method = 'Player.GoTo';
+				data.params.playerid = XBMC.playerid;
+				data.params.value = 'next';
+				break;
+			case REQUEST.PREV:
+				data.method = 'Player.GoTo';
+				data.params.playerid = XBMC.playerid;
+				data.params.value = 'previous';
+				break;
 			case REQUEST.REFRESH:
 				data.method = 'Player.GetActivePlayers';
 				break;

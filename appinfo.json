@@ -76,6 +76,16 @@
 			},
 			{
 				"type": "png",
+				"name": "ICON_NEXT",
+				"file": "images/next.png"
+			},
+			{
+				"type": "png",
+				"name": "ICON_PREVIOUS",
+				"file": "images/previous.png"
+			},
+			{
+				"type": "png",
 				"name": "ICON_UP",
 				"file": "images/up.png"
 			},

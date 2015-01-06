@@ -20,6 +20,8 @@ GBitmap *action_icon_pause = NULL;
 GBitmap *action_icon_play_pause = NULL;
 GBitmap *action_icon_forward = NULL;
 GBitmap *action_icon_rewind = NULL;
+GBitmap *action_icon_next = NULL;
+GBitmap *action_icon_previous = NULL;
 GBitmap *action_icon_up = NULL;
 GBitmap *action_icon_down = NULL;
 GBitmap *action_icon_select = NULL;
@@ -44,6 +46,8 @@ void skipstone_init(void) {
 	action_icon_play_pause = gbitmap_create_with_resource(RESOURCE_ID_ICON_PLAY_PAUSE);
 	action_icon_forward = gbitmap_create_with_resource(RESOURCE_ID_ICON_FORWARD);
 	action_icon_rewind = gbitmap_create_with_resource(RESOURCE_ID_ICON_REWIND);
+	action_icon_next = gbitmap_create_with_resource(RESOURCE_ID_ICON_NEXT);
+	action_icon_previous = gbitmap_create_with_resource(RESOURCE_ID_ICON_PREVIOUS);
 	action_icon_up = gbitmap_create_with_resource(RESOURCE_ID_ICON_UP);
 	action_icon_down = gbitmap_create_with_resource(RESOURCE_ID_ICON_DOWN);
 	action_icon_select = gbitmap_create_with_resource(RESOURCE_ID_ICON_SELECT);

@@ -9,6 +9,8 @@ extern GBitmap *action_icon_pause;
 extern GBitmap *action_icon_play_pause;
 extern GBitmap *action_icon_forward;
 extern GBitmap *action_icon_rewind;
+extern GBitmap *action_icon_next;
+extern GBitmap *action_icon_previous;
 extern GBitmap *action_icon_up;
 extern GBitmap *action_icon_down;
 extern GBitmap *action_icon_select;
