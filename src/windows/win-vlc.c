@@ -166,7 +166,7 @@ static void down_long_click_handler(ClickRecognizerRef recognizer, void *context
 }
 
 static void select_long_click_handler(ClickRecognizerRef recognizer, void *context) {
-	controlling_type = (controlling_type + 1) % 2;
+	controlling_type = (controlling_type + 1) % 3;
 	update_action_bar_icons();
 	skipstone_short_vibe();
 }
