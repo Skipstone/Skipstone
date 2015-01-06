@@ -126,12 +126,12 @@ var XBMC = {
 			case REQUEST.NEXT:
 				data.method = 'Player.GoTo';
 				data.params.playerid = XBMC.playerid;
-				data.params.value = 'next';
+				data.params.to = 'next';
 				break;
 			case REQUEST.PREV:
 				data.method = 'Player.GoTo';
 				data.params.playerid = XBMC.playerid;
-				data.params.value = 'previous';
+				data.params.to = 'previous';
 				break;
 			case REQUEST.REFRESH:
 				data.method = 'Player.GetActivePlayers';
