@@ -64,6 +64,8 @@ void skipstone_deinit(void) {
 	gbitmap_destroy_safe(action_icon_play_pause);
 	gbitmap_destroy_safe(action_icon_forward);
 	gbitmap_destroy_safe(action_icon_rewind);
+	gbitmap_destroy_safe(action_icon_next);
+	gbitmap_destroy_safe(action_icon_previous);
 	gbitmap_destroy_safe(action_icon_up);
 	gbitmap_destroy_safe(action_icon_down);
 	gbitmap_destroy_safe(action_icon_select);

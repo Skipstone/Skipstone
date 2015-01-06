@@ -44,7 +44,8 @@ static char *volume = NULL;
 
 typedef enum {
 	CONTROLLING_TYPE_VOLUME,
-	CONTROLLING_TYPE_SEEK
+	CONTROLLING_TYPE_SEEK,
+	CONTROLLING_TYPE_PLAYLIST
 } CONTROLLING_TYPE;
 
 static CONTROLLING_TYPE controlling_type;
@@ -112,6 +113,9 @@ static void up_single_click_handler(ClickRecognizerRef recognizer, void *context
 		case CONTROLLING_TYPE_SEEK:
 			vlc_request(KEY_REQUEST_BACKWARD_SHORT);
 			break;
+		case CONTROLLING_TYPE_PLAYLIST:
+			vlc_request(KEY_REQUEST_PREV);
+			break;
 	}
 }
 
@@ -122,6 +126,9 @@ static void down_single_click_handler(ClickRecognizerRef recognizer, void *conte
 			break;
 		case CONTROLLING_TYPE_SEEK:
 			vlc_request(KEY_REQUEST_FORWARD_SHORT);
+			break;
+		case CONTROLLING_TYPE_PLAYLIST:
+			vlc_request(KEY_REQUEST_NEXT);
 			break;
 	}
 }
@@ -138,6 +145,9 @@ static void up_long_click_handler(ClickRecognizerRef recognizer, void *context) 
 		case CONTROLLING_TYPE_SEEK:
 			vlc_request(KEY_REQUEST_BACKWARD_LONG);
 			break;
+		case CONTROLLING_TYPE_PLAYLIST:
+			vlc_request(KEY_REQUEST_PREV);
+			break;
 	}
 }
 
@@ -148,6 +158,9 @@ static void down_long_click_handler(ClickRecognizerRef recognizer, void *context
 			break;
 		case CONTROLLING_TYPE_SEEK:
 			vlc_request(KEY_REQUEST_FORWARD_LONG);
+			break;
+		case CONTROLLING_TYPE_PLAYLIST:
+			vlc_request(KEY_REQUEST_NEXT);
 			break;
 	}
 }
@@ -177,6 +190,11 @@ static void update_action_bar_icons() {
 		case CONTROLLING_TYPE_SEEK:
 			action_bar_layer_set_icon(action_bar, BUTTON_ID_UP, action_icon_rewind);
 			action_bar_layer_set_icon(action_bar, BUTTON_ID_DOWN, action_icon_forward);
+			action_bar_layer_set_icon(action_bar, BUTTON_ID_SELECT, (strcmp(status, "Playing") == 0) ? action_icon_pause : action_icon_play);
+			break;
+		case CONTROLLING_TYPE_PLAYLIST:
+			action_bar_layer_set_icon(action_bar, BUTTON_ID_UP, action_icon_previous);
+			action_bar_layer_set_icon(action_bar, BUTTON_ID_DOWN, action_icon_next);
 			action_bar_layer_set_icon(action_bar, BUTTON_ID_SELECT, (strcmp(status, "Playing") == 0) ? action_icon_pause : action_icon_play);
 			break;
 	}

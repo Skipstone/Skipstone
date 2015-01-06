@@ -73,6 +73,12 @@ var VLC = {
 				params.command = 'seek';
 				params.val = '-1M';
 				break;
+			case REQUEST.NEXT:
+				params.command = 'pl_next';
+				break;
+			case REQUEST.PREV:
+				params.command = 'pl_previous';
+				break;
 		}
 
 		VLC.makeRequest(player, params);
