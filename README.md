@@ -45,6 +45,7 @@ Skipstone is a fully featured universal media player remote watch app for the Pe
 * Toggle play/pause.
 * Increment or decrement volume 5% and set it to lowest or highest.
 * Seek +- 10 seconds and +- 1 minute.
+* Next/previous item in your playlist.
 * Title text on top displays the filename VLC provides, or an error if one occurs.
 * Status gets the status from VLC - should be "Playing", "Paused", "Stopped", or "Unknown" when not known.
 * Volume is displayed in a progress bar and as text; both range from 0% to 200% (0% when unknown).
@@ -66,6 +67,9 @@ Skipstone is a fully featured universal media player remote watch app for the Pe
 | Single click down <sub><sup>(option 2)</sup></sub> | Seek -10 seconds          |
 | Long click up <sub><sup>(option 2)</sup></sub>     | Seek +1 minute            |
 | Long click down <sub><sup>(option 2)</sup></sub>   | Seek -1 minute            |
+|                                                    |                           |
+| Single click up <sub><sup>(option 3)</sup></sub>   | Previous in playlist      |
+| Single click down <sub><sup>(option 3)</sup></sub> | Next in playlist          |
 
 ## XBMC
 
@@ -75,6 +79,7 @@ Skipstone is a fully featured universal media player remote watch app for the Pe
 * Press select, back, up, down, left, and right buttons.
 * Increment and decrement volume and set it to lowest or highest.
 * Seek short and long.
+* Next/previous item in your playlist.
 * Title text on top displays the filename XBMC provides, or an error if one occurs.
 * Status displays either "Playing", "Paused", "Stopped", or "Unknown" when not known.
 * Volume is displayed in a progress bar and as text; both range from 0% to 100% (0% when unknown).
@@ -82,28 +87,32 @@ Skipstone is a fully featured universal media player remote watch app for the Pe
 
 ### Controls
 
-| Button                                               | Function                      |
-| ---------------------------------------------------- | ----------------------------- |
-| Long click select                                    | Switch between options 1/2/3  |
-| Double click select                                  | Back Button                   |
-|                                                      |                               |
-| Single click select <sub><sup>(option 1)</sup></sub> | Select Button                 |
-| Single click up <sub><sup>(option 1)</sup></sub>     | Up Button                     |
-| Single click down <sub><sup>(option 1)</sup></sub>   | Down Button                   |
-| Long click up <sub><sup>(option 1)</sup></sub>       | Left Button                   |
-| Long click down <sub><sup>(option 1)</sup></sub>     | Right Button                  |
-|                                                      |                               |
-| Single click select <sub><sup>(option 2)</sup></sub> | Toggle play/pause             |
-| Single click up <sub><sup>(option 2)</sup></sub>     | Short Backwards (-30 seconds) |
-| Single click down <sub><sup>(option 2)</sup></sub>   | Short Forwards (+30 seconds)  |
-| Long click up <sub><sup>(option 2)</sup></sub>       | Long Backwards (-10 minutes)  |
-| Long click down <sub><sup>(option 2)</sup></sub>     | Long Forwards (+10 minutes)   |
-|                                                      |                               |
-| Single click select <sub><sup>(option 3)</sup></sub> | Toggle play/pause             |
-| Single click up <sub><sup>(option 3)</sup></sub>     | Increment volume              |
-| Single click down <sub><sup>(option 3)</sup></sub>   | Decrement volume              |
-| Long click up <sub><sup>(option 3)</sup></sub>       | Set volume to 100%            |
-| Long click down <sub><sup>(option 3)</sup></sub>     | Set volume to 0%              |
+| Button                                               | Function                       |
+| ---------------------------------------------------- | ------------------------------ |
+| Long click select                                    | Switch between options 1/2/3/4 |
+| Double click select                                  | Back Button                    |
+|                                                      |                                |
+| Single click select <sub><sup>(option 1)</sup></sub> | Select Button                  |
+| Single click up <sub><sup>(option 1)</sup></sub>     | Up Button                      |
+| Single click down <sub><sup>(option 1)</sup></sub>   | Down Button                    |
+| Long click up <sub><sup>(option 1)</sup></sub>       | Left Button                    |
+| Long click down <sub><sup>(option 1)</sup></sub>     | Right Button                   |
+|                                                      |                                |
+| Single click select <sub><sup>(option 2)</sup></sub> | Toggle play/pause              |
+| Single click up <sub><sup>(option 2)</sup></sub>     | Short Backwards (-30 seconds)  |
+| Single click down <sub><sup>(option 2)</sup></sub>   | Short Forwards (+30 seconds)   |
+| Long click up <sub><sup>(option 2)</sup></sub>       | Long Backwards (-10 minutes)   |
+| Long click down <sub><sup>(option 2)</sup></sub>     | Long Forwards (+10 minutes)    |
+|                                                      |                                |
+| Single click select <sub><sup>(option 3)</sup></sub> | Toggle play/pause              |
+| Single click up <sub><sup>(option 3)</sup></sub>     | Previous in playlist           |
+| Single click down <sub><sup>(option 3)</sup></sub>   | Next in playlist               |
+|                                                      |                                |
+| Single click select <sub><sup>(option 4)</sup></sub> | Toggle play/pause              |
+| Single click up <sub><sup>(option 4)</sup></sub>     | Increment volume               |
+| Single click down <sub><sup>(option 4)</sup></sub>   | Decrement volume               |
+| Long click up <sub><sup>(option 4)</sup></sub>       | Set volume to 100%             |
+| Long click down <sub><sup>(option 4)</sup></sub>     | Set volume to 0%               |
 
 ## WDTV
 
