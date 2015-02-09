@@ -63,11 +63,11 @@ var VLC = {
 				break;
 			case REQUEST.FORWARD_LONG:
 				params.command = 'seek';
-				params.val = '-10S';
+				params.val = '+1M';
 				break;
 			case REQUEST.BACKWARD_SHORT:
 				params.command = 'seek';
-				params.val = '+1M';
+				params.val = '-10S';
 				break;
 			case REQUEST.BACKWARD_LONG:
 				params.command = 'seek';
