@@ -4,7 +4,7 @@
 	"longName": "Skipstone",
 	"companyName": "Skipstone",
 	"versionCode": 1,
-	"versionLabel": "2.5",
+	"versionLabel": "2.6",
 	"capabilities": [ "configurable" ],
 	"watchapp": {
 		"watchface": false
@@ -115,5 +115,10 @@
 				"file": "images/settings.png"
 			}
 		]
-	}
+	},
+    "targetPlatforms": [
+      "aplite",
+      "basalt"
+    ],
+    "sdkVersion": "3"
 }
