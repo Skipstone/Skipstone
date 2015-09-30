@@ -1,7 +1,7 @@
 #include <pebble.h>
 #include "wdtv.h"
 #include "libs/pebble-assist.h"
-//#include "generated/appinfo.h"
+#include "generated/appinfo.h"
 #include "generated/keys.h"
 #include "skipstone.h"
 #include "players.h"

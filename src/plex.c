@@ -1,8 +1,8 @@
 #include <pebble.h>
 #include "plex.h"
 #include "libs/pebble-assist.h"
-//#include "generated/appinfo.h"
-//#include "generated/keys.h"
+#include "generated/appinfo.h"
+#include "generated/keys.h"
 #include "skipstone.h"
 #include "players.h"
 #include "windows/win-plex.h"

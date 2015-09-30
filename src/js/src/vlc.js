@@ -43,11 +43,11 @@ var VLC = {
 				break;
 			case REQUEST.VOLUME_INCREMENT:
 				params.command = 'volume';
-				params.val = '+12';
+				params.val = '+12.8';
 				break;
 			case REQUEST.VOLUME_DECREMENT:
 				params.command = 'volume';
-				params.val = '-12';
+				params.val = '-12.8';
 				break;
 			case REQUEST.VOLUME_MIN:
 				params.command = 'volume';
