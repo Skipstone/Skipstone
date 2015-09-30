@@ -1,119 +1,123 @@
 {
-	"uuid": "b3c70a75-e501-455a-9f72-3b3d06e75f4c",
-	"shortName": "Skipstone",
-	"longName": "Skipstone",
-	"companyName": "Skipstone",
-	"versionCode": 1,
-	"versionLabel": "2.5",
-	"capabilities": [ "configurable" ],
-	"watchapp": {
-		"watchface": false
-	},
-	"appKeys": {
-		"type": 0,
-		"method": 1,
-		"request": 2,
-		"index": 3,
-		"title": 4,
-		"subtitle": 5,
-		"status": 6,
-		"volume": 7,
-		"seek": 8,
-		"player": 9
-	},
-	"resources": {
-		"media": [
-			{
-				"menuIcon": true,
-				"type": "png",
-				"name": "IMAGE_MENU_ICON",
-				"file": "images/icon.png"
-			},
-			{
-				"type": "png",
-				"name": "IMAGE_PLEX_LOGO",
-				"file": "images/plex_logo.png"
-			},
-			{
-				"type": "png",
-				"name": "IMAGE_WDTV",
-				"file": "images/wdtv.png"
-			},
-			{
-				"type": "png",
-				"name": "ICON_VOLUME_UP",
-				"file": "images/volume_up.png"
-			},
-			{
-				"type": "png",
-				"name": "ICON_VOLUME_DOWN",
-				"file": "images/volume_down.png"
-			},
-			{
-				"type": "png",
-				"name": "ICON_PLAY_PAUSE",
-				"file": "images/play_pause.png"
-			},
-			{
-				"type": "png",
-				"name": "ICON_PLAY",
-				"file": "images/play.png"
-			},
-			{
-				"type": "png",
-				"name": "ICON_PAUSE",
-				"file": "images/pause.png"
-			},
-			{
-				"type": "png",
-				"name": "ICON_FORWARD",
-				"file": "images/forward.png"
-			},
-			{
-				"type": "png",
-				"name": "ICON_REWIND",
-				"file": "images/rewind.png"
-			},
-			{
-				"type": "png",
-				"name": "ICON_NEXT",
-				"file": "images/next.png"
-			},
-			{
-				"type": "png",
-				"name": "ICON_PREVIOUS",
-				"file": "images/previous.png"
-			},
-			{
-				"type": "png",
-				"name": "ICON_UP",
-				"file": "images/up.png"
-			},
-			{
-				"type": "png",
-				"name": "ICON_DOWN",
-				"file": "images/down.png"
-			},
-			{
-				"type": "png",
-				"name": "ICON_SELECT",
-				"file": "images/select.png"
-			},
-			{
-				"type": "png",
-				"name": "ICON_HOME",
-				"file": "images/home.png"
-			},
-			{
-				"type": "png",
-				"name": "ICON_BACK",
-				"file": "images/back.png"
-			},
-			{
-				"type": "png",
-				"name": "ICON_SETTINGS",
-				"file": "images/settings.png"
-			}
-		]
-	}
+    "appKeys": {
+        "index": 3,
+        "method": 1,
+        "player": 9,
+        "request": 2,
+        "seek": 8,
+        "status": 6,
+        "subtitle": 5,
+        "title": 4,
+        "type": 0,
+        "volume": 7
+    },
+    "capabilities": [
+        "configurable"
+    ],
+    "companyName": "Skipstone",
+    "longName": "Skipstone",
+    "projectType": "native",
+    "resources": {
+        "media": [
+            {
+                "file": "images/icon.png",
+                "menuIcon": true,
+                "name": "IMAGE_MENU_ICON",
+                "type": "png"
+            },
+            {
+                "file": "images/back.png",
+                "name": "ICON_BACK",
+                "type": "png"
+            },
+            {
+                "file": "images/wdtv.png",
+                "name": "IMAGE_WDTV",
+                "type": "png"
+            },
+            {
+                "file": "images/volume_up.png",
+                "name": "ICON_VOLUME_UP",
+                "type": "png"
+            },
+            {
+                "file": "images/previous.png",
+                "name": "ICON_PREVIOUS",
+                "type": "png"
+            },
+            {
+                "file": "images/home.png",
+                "name": "ICON_HOME",
+                "type": "png"
+            },
+            {
+                "file": "images/pause.png",
+                "name": "ICON_PAUSE",
+                "type": "png"
+            },
+            {
+                "file": "images/plex_logo.png",
+                "name": "IMAGE_PLEX_LOGO",
+                "type": "png"
+            },
+            {
+                "file": "images/forward.png",
+                "name": "ICON_FORWARD",
+                "type": "png"
+            },
+            {
+                "file": "images/rewind.png",
+                "name": "ICON_REWIND",
+                "type": "png"
+            },
+            {
+                "file": "images/next.png",
+                "name": "ICON_NEXT",
+                "type": "png"
+            },
+            {
+                "file": "images/volume_down.png",
+                "name": "ICON_VOLUME_DOWN",
+                "type": "png"
+            },
+            {
+                "file": "images/down.png",
+                "name": "ICON_DOWN",
+                "type": "png"
+            },
+            {
+                "file": "images/settings.png",
+                "name": "ICON_SETTINGS",
+                "type": "png"
+            },
+            {
+                "file": "images/up.png",
+                "name": "ICON_UP",
+                "type": "png"
+            },
+            {
+                "file": "images/play.png",
+                "name": "ICON_PLAY",
+                "type": "png"
+            },
+            {
+                "file": "images/play_pause.png",
+                "name": "ICON_PLAY_PAUSE",
+                "type": "png"
+            },
+            {
+                "file": "images/select.png",
+                "name": "ICON_SELECT",
+                "type": "png"
+            }
+        ]
+    },
+    "sdkVersion": "2",
+    "shortName": "Skipstone",
+    "uuid": "b3c70a75-e501-455a-9f72-3b3d06e75f4c",
+    "versionCode": 1,
+    "versionLabel": "2.5",
+    "watchapp": {
+        "watchface": false
+    }
 }
