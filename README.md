@@ -53,23 +53,23 @@ Skipstone is a fully featured universal media player remote watch app for the Pe
 
 ### Controls
 
-| Button                                             | Function                  |
-| -------------------------------------------------- | ------------------------- |
-| Single click select                                | Toggle play/pause         |
-| Long click select                                  | Switch between option 1/2 |
-|                                                    |                           |
-| Single click up <sub><sup>(option 1)</sup></sub>   | Increment volume 5%       |
-| Single click down <sub><sup>(option 1)</sup></sub> | Decrement volume 5%       |
-| Long click up <sub><sup>(option 1)</sup></sub>     | Set volume to 0%          |
-| Long click down <sub><sup>(option 1)</sup></sub>   | Set volume to 200%        |
-|                                                    |                           |
-| Single click up <sub><sup>(option 2)</sup></sub>   | Seek +10 seconds          |
-| Single click down <sub><sup>(option 2)</sup></sub> | Seek -10 seconds          |
-| Long click up <sub><sup>(option 2)</sup></sub>     | Seek +1 minute            |
-| Long click down <sub><sup>(option 2)</sup></sub>   | Seek -1 minute            |
-|                                                    |                           |
-| Single click up <sub><sup>(option 3)</sup></sub>   | Previous in playlist      |
-| Single click down <sub><sup>(option 3)</sup></sub> | Next in playlist          |
+| Button                                             | Function                    |
+| -------------------------------------------------- | --------------------------- |
+| Single click select                                | Toggle play/pause           |
+| Long click select                                  | Switch between option 1/2/3 |
+|                                                    |                             |
+| Single click up <sub><sup>(option 1)</sup></sub>   | Increment volume 5%         |
+| Single click down <sub><sup>(option 1)</sup></sub> | Decrement volume 5%         |
+| Long click up <sub><sup>(option 1)</sup></sub>     | Set volume to 0%            |
+| Long click down <sub><sup>(option 1)</sup></sub>   | Set volume to 200%          |
+|                                                    |                             |
+| Single click up <sub><sup>(option 2)</sup></sub>   | Seek +10 seconds            |
+| Single click down <sub><sup>(option 2)</sup></sub> | Seek -10 seconds            |
+| Long click up <sub><sup>(option 2)</sup></sub>     | Seek +1 minute              |
+| Long click down <sub><sup>(option 2)</sup></sub>   | Seek -1 minute              |
+|                                                    |                             |
+| Single click up <sub><sup>(option 3)</sup></sub>   | Previous in playlist        |
+| Single click down <sub><sup>(option 3)</sup></sub> | Next in playlist            |
 
 ## XBMC
 
